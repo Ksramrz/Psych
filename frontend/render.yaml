@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: clinicsense-frontend
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # Add other environment variables in Render dashboard
+    healthCheckPath: /
+
