@@ -5,7 +5,7 @@ import { syncUserFromClerk } from '../services/supabase.js';
 const router = Router();
 
 // Clerk webhook handler for user sync
-router.post('/clerk', async (req, res) => {
+router.post('/clerk', async (req, res): Promise<void> => {
   const WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SECRET;
 
   if (!WEBHOOK_SECRET) {

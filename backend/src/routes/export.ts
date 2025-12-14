@@ -5,7 +5,7 @@ import { exportUserData } from '../services/storage/dataManager.js';
 const router = Router();
 
 // Export user data as PDF (placeholder - implement PDF generation)
-router.get('/pdf', requireAuth, async (req: AuthenticatedRequest, res) => {
+router.get('/pdf', requireAuth, async (req: AuthenticatedRequest, res): Promise<void> => {
   try {
     const { userId, user } = req;
     if (!userId || !user) {
@@ -26,7 +26,7 @@ router.get('/pdf', requireAuth, async (req: AuthenticatedRequest, res) => {
 });
 
 // Export user data as text
-router.get('/text', requireAuth, async (req: AuthenticatedRequest, res) => {
+router.get('/text', requireAuth, async (req: AuthenticatedRequest, res): Promise<void> => {
   try {
     const { userId, user } = req;
     if (!userId || !user) {

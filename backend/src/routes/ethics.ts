@@ -12,7 +12,7 @@ const createEthicsCheckSchema = z.object({
 });
 
 // Create ethics check
-router.post('/', requireAuth, async (req: AuthenticatedRequest, res) => {
+router.post('/', requireAuth, async (req: AuthenticatedRequest, res): Promise<void> => {
   try {
     const { userId, user } = req;
     if (!userId || !user) {
@@ -72,7 +72,7 @@ router.post('/', requireAuth, async (req: AuthenticatedRequest, res) => {
 });
 
 // Get ethics check by ID
-router.get('/:id', requireAuth, async (req: AuthenticatedRequest, res) => {
+router.get('/:id', requireAuth, async (req: AuthenticatedRequest, res): Promise<void> => {
   try {
     const { userId, user } = req;
     if (!userId || !user) {
@@ -100,7 +100,7 @@ router.get('/:id', requireAuth, async (req: AuthenticatedRequest, res) => {
 });
 
 // List user's ethics checks
-router.get('/', requireAuth, async (req: AuthenticatedRequest, res) => {
+router.get('/', requireAuth, async (req: AuthenticatedRequest, res): Promise<void> => {
   try {
     const { userId, user } = req;
     if (!userId || !user) {

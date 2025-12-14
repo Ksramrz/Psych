@@ -1,11 +1,6 @@
-import Anthropic from '@anthropic-ai/sdk';
 import dotenv from 'dotenv';
 
 dotenv.config();
-
-const anthropic = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY,
-});
 
 // Claude uses a different embedding model, but for now we'll use text-embedding-3-small from OpenAI
 // or we can use Supabase's built-in embeddings
@@ -40,7 +35,7 @@ export async function generateEmbedding(text: string): Promise<number[]> {
     return generateFallbackEmbedding(text);
   }
 
-  const data = await response.json();
+  const data = await response.json() as { data: Array<{ embedding: number[] }> };
   return data.data[0].embedding;
 }
 

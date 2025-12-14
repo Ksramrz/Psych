@@ -43,7 +43,7 @@ app.use(cors({
 }));
 
 // Health check endpoint (before auth - for monitoring)
-app.get('/health', (req, res) => {
+app.get('/health', (_req, res) => {
   res.json({ 
     status: 'ok', 
     message: 'ClinicSense API is running',

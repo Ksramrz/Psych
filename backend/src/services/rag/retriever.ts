@@ -13,7 +13,7 @@ export interface RetrievedDocument {
 
 export async function retrieveRelevantDocuments(
   query: string,
-  queryEmbedding: number[],
+  _queryEmbedding: number[],
   limit: number = 5,
   documentType?: string
 ): Promise<RetrievedDocument[]> {

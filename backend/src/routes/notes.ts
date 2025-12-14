@@ -12,7 +12,7 @@ const createNoteSchema = z.object({
 });
 
 // Create and summarize notes
-router.post('/', requireAuth, async (req: AuthenticatedRequest, res) => {
+router.post('/', requireAuth, async (req: AuthenticatedRequest, res): Promise<void> => {
   try {
     const { userId, user } = req;
     if (!userId || !user) {
@@ -76,7 +76,7 @@ function formatSummary(summary: any): string {
 }
 
 // Get notes by ID
-router.get('/:id', requireAuth, async (req: AuthenticatedRequest, res) => {
+router.get('/:id', requireAuth, async (req: AuthenticatedRequest, res): Promise<void> => {
   try {
     const { userId, user } = req;
     if (!userId || !user) {
@@ -114,7 +114,7 @@ router.get('/:id', requireAuth, async (req: AuthenticatedRequest, res) => {
 });
 
 // List user's notes
-router.get('/', requireAuth, async (req: AuthenticatedRequest, res) => {
+router.get('/', requireAuth, async (req: AuthenticatedRequest, res): Promise<void> => {
   try {
     const { userId, user } = req;
     if (!userId || !user) {

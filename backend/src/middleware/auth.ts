@@ -13,18 +13,20 @@ export async function requireAuth(
   req: AuthenticatedRequest,
   res: Response,
   next: NextFunction
-) {
+): Promise<void> {
   try {
     const { userId } = getAuth(req);
 
     if (!userId) {
-      return res.status(401).json({ error: 'Unauthorized' });
+      res.status(401).json({ error: 'Unauthorized' });
+      return;
     }
 
     // Get user from database
     const user = await getUserByClerkId(userId);
     if (!user) {
-      return res.status(404).json({ error: 'User not found' });
+      res.status(404).json({ error: 'User not found' });
+      return;
     }
 
     req.userId = userId;
@@ -32,7 +34,7 @@ export async function requireAuth(
     next();
   } catch (error) {
     console.error('Auth error:', error);
-    return res.status(401).json({ error: 'Authentication failed' });
+    res.status(401).json({ error: 'Authentication failed' });
   }
 }
 

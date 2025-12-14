@@ -1,5 +1,5 @@
-import { callClaude, buildSystemPrompt } from './llmClient.js';
-import { loadPromptTemplate, buildPrompt } from './promptBuilder.js';
+import { callClaude } from './llmClient.js';
+import { loadPromptTemplate, buildPrompt, buildSystemPrompt } from './promptBuilder.js';
 
 export interface NotesSummary {
   sessionOverview: string;

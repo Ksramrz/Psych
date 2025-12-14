@@ -15,7 +15,7 @@ const ingestDocumentSchema = z.object({
 });
 
 // Ingest a document into the RAG system (admin only in production)
-router.post('/ingest', requireAuth, async (req: AuthenticatedRequest, res) => {
+router.post('/ingest', requireAuth, async (req: AuthenticatedRequest, res): Promise<void> => {
   try {
     const { userId, user } = req;
     if (!userId || !user) {
@@ -41,7 +41,7 @@ router.post('/ingest', requireAuth, async (req: AuthenticatedRequest, res) => {
 });
 
 // Batch ingest documents
-router.post('/ingest/batch', requireAuth, async (req: AuthenticatedRequest, res) => {
+router.post('/ingest/batch', requireAuth, async (req: AuthenticatedRequest, res): Promise<void> => {
   try {
     const { userId, user } = req;
     if (!userId || !user) {

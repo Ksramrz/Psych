@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { requireAuth, AuthenticatedRequest } from '../middleware/auth.js';
-import { checkRateLimit, trackTokenUsage } from '../services/ai/llmClient.js';
+import { checkRateLimit } from '../services/ai/llmClient.js';
 import { analyzeCase } from '../services/ai/caseAnalyzer.js';
 import { supabase } from '../services/supabase.js';
 import { z } from 'zod';
@@ -13,7 +13,7 @@ const createCaseSchema = z.object({
 });
 
 // Create and analyze a case
-router.post('/', requireAuth, async (req: AuthenticatedRequest, res) => {
+router.post('/', requireAuth, async (req: AuthenticatedRequest, res): Promise<void> => {
   try {
     const { userId, user } = req;
     if (!userId || !user) {
@@ -73,7 +73,7 @@ router.post('/', requireAuth, async (req: AuthenticatedRequest, res) => {
 });
 
 // Get a case by ID
-router.get('/:id', requireAuth, async (req: AuthenticatedRequest, res) => {
+router.get('/:id', requireAuth, async (req: AuthenticatedRequest, res): Promise<void> => {
   try {
     const { userId, user } = req;
     if (!userId || !user) {
@@ -101,7 +101,7 @@ router.get('/:id', requireAuth, async (req: AuthenticatedRequest, res) => {
 });
 
 // List user's cases
-router.get('/', requireAuth, async (req: AuthenticatedRequest, res) => {
+router.get('/', requireAuth, async (req: AuthenticatedRequest, res): Promise<void> => {
   try {
     const { userId, user } = req;
     if (!userId || !user) {

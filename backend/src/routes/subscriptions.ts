@@ -6,11 +6,11 @@ import Stripe from 'stripe';
 const router = Router();
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
-  apiVersion: '2024-06-20',
+  apiVersion: '2023-10-16',
 });
 
 // Get subscription plans
-router.get('/plans', requireAuth, async (req: AuthenticatedRequest, res) => {
+router.get('/plans', requireAuth, async (_req: AuthenticatedRequest, res): Promise<void> => {
   try {
     const plans = [
       {
@@ -58,7 +58,7 @@ router.get('/plans', requireAuth, async (req: AuthenticatedRequest, res) => {
 });
 
 // Create checkout session
-router.post('/checkout', requireAuth, async (req: AuthenticatedRequest, res) => {
+router.post('/checkout', requireAuth, async (req: AuthenticatedRequest, res): Promise<void> => {
   try {
     const { userId, user } = req;
     if (!userId || !user) {
@@ -108,7 +108,7 @@ router.post('/checkout', requireAuth, async (req: AuthenticatedRequest, res) => 
 });
 
 // Stripe webhook handler (raw body is already parsed by middleware)
-router.post('/webhook', async (req, res) => {
+router.post('/webhook', async (req, res): Promise<void> => {
   const sig = req.headers['stripe-signature'];
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
@@ -143,7 +143,6 @@ router.post('/webhook', async (req, res) => {
 
       case 'customer.subscription.updated':
       case 'customer.subscription.deleted': {
-        const subscription = event.data.object as Stripe.Subscription;
         // Handle subscription updates/deletions
         // Update user subscription tier based on status
         break;

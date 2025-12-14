@@ -10,7 +10,7 @@ const updateStorageSchema = z.object({
 });
 
 // Update storage preference
-router.put('/storage', requireAuth, async (req: AuthenticatedRequest, res) => {
+router.put('/storage', requireAuth, async (req: AuthenticatedRequest, res): Promise<void> => {
   try {
     const { userId, user } = req;
     if (!userId || !user) {
@@ -31,7 +31,7 @@ router.put('/storage', requireAuth, async (req: AuthenticatedRequest, res) => {
 });
 
 // Export user data
-router.get('/export', requireAuth, async (req: AuthenticatedRequest, res) => {
+router.get('/export', requireAuth, async (req: AuthenticatedRequest, res): Promise<void> => {
   try {
     const { userId, user } = req;
     if (!userId || !user) {
