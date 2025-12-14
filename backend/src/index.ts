@@ -22,7 +22,6 @@ const PORT = process.env.PORT || 5000;
 const allowedOrigins = [
   'https://clinic.cashvers.com',
   'https://clinicsense-frontend.onrender.com', // Render frontend URL
-  'http://localhost:3000', // For local development
 ];
 
 app.use(cors({
@@ -88,6 +87,6 @@ setInterval(async () => {
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`🚀 ClinicSense backend server running on http://localhost:${PORT}`);
+  console.log(`🚀 ClinicSense backend server running on port ${PORT}`);
 });
 
