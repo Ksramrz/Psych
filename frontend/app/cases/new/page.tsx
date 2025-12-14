@@ -23,7 +23,7 @@ export default function NewCasePage() {
     setError('');
 
     try {
-      const response = await apiRequest<{ id: string }>('/api/cases', {
+      const response = await apiRequest<{ id: string }>('/cases', {
         method: 'POST',
         body: JSON.stringify({ title, case_content: caseContent }),
       });
