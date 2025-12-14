@@ -1,4 +1,4 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://clinicsense-backend.onrender.com';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://clinic.cashvers.com/api';
 
 export async function apiRequest<T>(
   endpoint: string,

@@ -91,8 +91,8 @@ router.post('/checkout', requireAuth, async (req: AuthenticatedRequest, res) => 
         },
       ],
       mode: 'subscription',
-      success_url: `${process.env.FRONTEND_URL || 'https://clinic.cashvers.com'}/settings?success=true`,
-      cancel_url: `${process.env.FRONTEND_URL || 'https://clinic.cashvers.com'}/settings?canceled=true`,
+      success_url: `https://clinic.cashvers.com/settings?success=true`,
+      cancel_url: `https://clinic.cashvers.com/settings?canceled=true`,
       client_reference_id: user.id,
       metadata: {
         userId: user.id,

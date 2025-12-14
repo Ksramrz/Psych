@@ -21,7 +21,6 @@ const PORT = process.env.PORT || 5000;
 // Middleware - CORS configuration
 const allowedOrigins = [
   'https://clinic.cashvers.com',
-  'https://clinicsense-frontend.onrender.com', // Render frontend URL
 ];
 
 app.use(cors({
