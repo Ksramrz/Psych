@@ -62,13 +62,13 @@ router.post('/checkout', requireAuth, async (req: AuthenticatedRequest, res): Pr
   try {
     const { userId, user } = req;
     if (!userId || !user) {
-      return res.status(401).json({ error: 'Unauthorized' });
+      res.status(401).json({ error: 'Unauthorized' }); return;
     }
 
     const { planId } = req.body;
 
     if (!planId || planId === 'free') {
-      return res.status(400).json({ error: 'Invalid plan' });
+      res.status(400).json({ error: 'Invalid plan' }); return;
     }
 
     // In production, create Stripe products and prices
@@ -113,7 +113,7 @@ router.post('/webhook', async (req, res): Promise<void> => {
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
   if (!sig || !webhookSecret) {
-    return res.status(400).send('Missing signature or webhook secret');
+    res.status(400).send('Missing signature or webhook secret'); return;
   }
 
   let event: Stripe.Event;
@@ -122,7 +122,7 @@ router.post('/webhook', async (req, res): Promise<void> => {
     event = stripe.webhooks.constructEvent(req.body, sig, webhookSecret);
   } catch (err: any) {
     console.error('Webhook signature verification failed:', err.message);
-    return res.status(400).send(`Webhook Error: ${err.message}`);
+    res.status(400).send(`Webhook Error: ${err.message}`); return;
   }
 
   try {

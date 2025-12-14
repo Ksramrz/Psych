@@ -9,7 +9,7 @@ router.post('/clerk', async (req, res): Promise<void> => {
   const WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SECRET;
 
   if (!WEBHOOK_SECRET) {
-    return res.status(500).json({ error: 'Webhook secret not configured' });
+    res.status(500).json({ error: 'Webhook secret not configured' }); return;
   }
 
   const headers = req.headers;
@@ -18,7 +18,7 @@ router.post('/clerk', async (req, res): Promise<void> => {
   const svix_signature = headers['svix-signature'] as string;
 
   if (!svix_id || !svix_timestamp || !svix_signature) {
-    return res.status(400).json({ error: 'Missing svix headers' });
+    res.status(400).json({ error: 'Missing svix headers' }); return;
   }
 
   const payload = JSON.stringify(req.body);
@@ -34,7 +34,7 @@ router.post('/clerk', async (req, res): Promise<void> => {
     });
   } catch (err) {
     console.error('Webhook verification failed:', err);
-    return res.status(400).json({ error: 'Verification failed' });
+    res.status(400).json({ error: 'Verification failed' }); return;
   }
 
   const { id, email_addresses } = evt.data;
@@ -49,7 +49,7 @@ router.post('/clerk', async (req, res): Promise<void> => {
         console.log(`Synced user ${id} to Supabase`);
       } catch (error) {
         console.error('Error syncing user:', error);
-        return res.status(500).json({ error: 'Failed to sync user' });
+        res.status(500).json({ error: 'Failed to sync user' }); return;
       }
     }
   }

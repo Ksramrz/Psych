@@ -14,12 +14,12 @@ router.put('/storage', requireAuth, async (req: AuthenticatedRequest, res): Prom
   try {
     const { userId, user } = req;
     if (!userId || !user) {
-      return res.status(401).json({ error: 'Unauthorized' });
+      res.status(401).json({ error: 'Unauthorized' }); return;
     }
 
     const validation = updateStorageSchema.safeParse(req.body);
     if (!validation.success) {
-      return res.status(400).json({ error: validation.error.errors[0].message });
+      res.status(400).json({ error: validation.error.errors[0].message }); return;
     }
 
     await updateUserStoragePreference(user.id, validation.data.data_storage_enabled);
@@ -35,7 +35,7 @@ router.get('/export', requireAuth, async (req: AuthenticatedRequest, res): Promi
   try {
     const { userId, user } = req;
     if (!userId || !user) {
-      return res.status(401).json({ error: 'Unauthorized' });
+      res.status(401).json({ error: 'Unauthorized' }); return;
     }
 
     const data = await exportUserData(user.id);

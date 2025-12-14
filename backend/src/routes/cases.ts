@@ -17,22 +17,25 @@ router.post('/', requireAuth, async (req: AuthenticatedRequest, res): Promise<vo
   try {
     const { userId, user } = req;
     if (!userId || !user) {
-      return res.status(401).json({ error: 'Unauthorized' });
+      res.status(401).json({ error: 'Unauthorized' });
+      return;
     }
 
     // Check rate limit
     const rateLimit = checkRateLimit(userId, user.subscription_tier as any);
     if (!rateLimit.allowed) {
-      return res.status(429).json({
+      res.status(429).json({
         error: 'Rate limit exceeded',
         resetIn: rateLimit.resetIn,
       });
+      return;
     }
 
     // Validate input
     const validation = createCaseSchema.safeParse(req.body);
     if (!validation.success) {
-      return res.status(400).json({ error: validation.error.errors[0].message });
+      res.status(400).json({ error: validation.error.errors[0].message });
+      return;
     }
 
     const { title, case_content } = validation.data;
@@ -62,7 +65,8 @@ router.post('/', requireAuth, async (req: AuthenticatedRequest, res): Promise<vo
 
     if (error) {
       console.error('Database error:', error);
-      return res.status(500).json({ error: 'Failed to save case' });
+      res.status(500).json({ error: 'Failed to save case' });
+      return;
     }
 
     res.json({ id: data.id, analysis: analysisResult });
@@ -77,7 +81,8 @@ router.get('/:id', requireAuth, async (req: AuthenticatedRequest, res): Promise<
   try {
     const { userId, user } = req;
     if (!userId || !user) {
-      return res.status(401).json({ error: 'Unauthorized' });
+      res.status(401).json({ error: 'Unauthorized' });
+      return;
     }
 
     const { id } = req.params;
@@ -90,7 +95,8 @@ router.get('/:id', requireAuth, async (req: AuthenticatedRequest, res): Promise<
       .single();
 
     if (error || !data) {
-      return res.status(404).json({ error: 'Case not found' });
+      res.status(404).json({ error: 'Case not found' });
+      return;
     }
 
     res.json(data);
@@ -105,7 +111,8 @@ router.get('/', requireAuth, async (req: AuthenticatedRequest, res): Promise<voi
   try {
     const { userId, user } = req;
     if (!userId || !user) {
-      return res.status(401).json({ error: 'Unauthorized' });
+      res.status(401).json({ error: 'Unauthorized' });
+      return;
     }
 
     const { data, error } = await supabase
@@ -116,7 +123,8 @@ router.get('/', requireAuth, async (req: AuthenticatedRequest, res): Promise<voi
       .limit(50);
 
     if (error) {
-      return res.status(500).json({ error: 'Failed to get cases' });
+      res.status(500).json({ error: 'Failed to get cases' });
+      return;
     }
 
     res.json(data || []);

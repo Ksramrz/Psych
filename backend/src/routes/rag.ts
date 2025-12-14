@@ -19,17 +19,17 @@ router.post('/ingest', requireAuth, async (req: AuthenticatedRequest, res): Prom
   try {
     const { userId, user } = req;
     if (!userId || !user) {
-      return res.status(401).json({ error: 'Unauthorized' });
+      res.status(401).json({ error: 'Unauthorized' }); return;
     }
 
     // In production, add admin check here
     // if (user.subscription_tier !== 'admin') {
-    //   return res.status(403).json({ error: 'Forbidden' });
+    //   res.status(403).json({ error: 'Forbidden' }); return;
     // }
 
     const validation = ingestDocumentSchema.safeParse(req.body);
     if (!validation.success) {
-      return res.status(400).json({ error: validation.error.errors[0].message });
+      res.status(400).json({ error: validation.error.errors[0].message }); return;
     }
 
     const id = await storeDocuments([validation.data]);
@@ -45,7 +45,7 @@ router.post('/ingest/batch', requireAuth, async (req: AuthenticatedRequest, res)
   try {
     const { userId, user } = req;
     if (!userId || !user) {
-      return res.status(401).json({ error: 'Unauthorized' });
+      res.status(401).json({ error: 'Unauthorized' }); return;
     }
 
     const documents = z.array(ingestDocumentSchema).parse(req.body);

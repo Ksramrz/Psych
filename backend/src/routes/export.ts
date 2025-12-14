@@ -9,7 +9,7 @@ router.get('/pdf', requireAuth, async (req: AuthenticatedRequest, res): Promise<
   try {
     const { userId, user } = req;
     if (!userId || !user) {
-      return res.status(401).json({ error: 'Unauthorized' });
+      res.status(401).json({ error: 'Unauthorized' }); return;
     }
 
     const data = await exportUserData(user.id);
@@ -30,7 +30,7 @@ router.get('/text', requireAuth, async (req: AuthenticatedRequest, res): Promise
   try {
     const { userId, user } = req;
     if (!userId || !user) {
-      return res.status(401).json({ error: 'Unauthorized' });
+      res.status(401).json({ error: 'Unauthorized' }); return;
     }
 
     const data = await exportUserData(user.id);
