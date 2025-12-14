@@ -3,11 +3,11 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/Navbar';
-import { apiRequest } from '@/lib/api';
+import { useApiRequest } from '@/hooks/useApiRequest';
 
 export default function NewCasePage() {
   const router = useRouter();
-  const { getToken } = useAuth();
+  const { request } = useApiRequest();
   const [title, setTitle] = useState('');
   const [caseContent, setCaseContent] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -24,11 +24,10 @@ export default function NewCasePage() {
     setError('');
 
     try {
-      const token = await getToken();
-      const response = await apiRequest<{ id: string }>('/cases', {
+      const response = await request<{ id: string }>('/cases', {
         method: 'POST',
         body: JSON.stringify({ title, case_content: caseContent }),
-      }, token);
+      });
 
       router.push(`/cases/${response.id}`);
     } catch (err: any) {

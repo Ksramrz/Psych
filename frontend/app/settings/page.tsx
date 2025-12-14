@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
-import { apiRequest } from '@/lib/api';
+import { useApiRequest } from '@/hooks/useApiRequest';
 
 export default function SettingsPage() {
+  const { request } = useApiRequest();
   const [dataStorage, setDataStorage] = useState(true);
   const [loading, setLoading] = useState(false);
   const [exporting, setExporting] = useState(false);
@@ -18,7 +19,7 @@ export default function SettingsPage() {
   const handleStorageToggle = async (enabled: boolean) => {
     setLoading(true);
     try {
-      await apiRequest('/settings/storage', {
+      await request('/settings/storage', {
         method: 'PUT',
         body: JSON.stringify({ data_storage_enabled: enabled }),
       });
@@ -35,7 +36,7 @@ export default function SettingsPage() {
   const handleExport = async () => {
     setExporting(true);
     try {
-      const data = await apiRequest('/settings/export');
+      const data = await request('/settings/export');
       const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -117,7 +118,7 @@ export default function SettingsPage() {
                 <button
                   onClick={async () => {
                     try {
-                      const response = await apiRequest<{ url: string }>('/subscriptions/checkout', {
+                      const response = await request<{ url: string }>('/subscriptions/checkout', {
                         method: 'POST',
                         body: JSON.stringify({ planId: 'pro' }),
                       });
@@ -133,7 +134,7 @@ export default function SettingsPage() {
                 <button
                   onClick={async () => {
                     try {
-                      const response = await apiRequest<{ url: string }>('/subscriptions/checkout', {
+                      const response = await request<{ url: string }>('/subscriptions/checkout', {
                         method: 'POST',
                         body: JSON.stringify({ planId: 'clinic' }),
                       });

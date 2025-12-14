@@ -3,10 +3,11 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/Navbar';
-import { apiRequest } from '@/lib/api';
+import { useApiRequest } from '@/hooks/useApiRequest';
 
 export default function EthicsCheckPage() {
   const router = useRouter();
+  const { request } = useApiRequest();
   const [question, setQuestion] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -22,7 +23,7 @@ export default function EthicsCheckPage() {
     setError('');
 
     try {
-      const response = await apiRequest<{ id: string }>('/ethics', {
+      const response = await request<{ id: string }>('/ethics', {
         method: 'POST',
         body: JSON.stringify({ question }),
       });

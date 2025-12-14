@@ -3,7 +3,7 @@
 import { use, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/Navbar';
-import { apiRequest } from '@/lib/api';
+import { useApiRequest } from '@/hooks/useApiRequest';
 
 interface NotesSummary {
   sessionOverview: string;
@@ -25,6 +25,7 @@ interface NotesData {
 export default function NotesDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
   const router = useRouter();
+  const { request } = useApiRequest();
   const [notesData, setNotesData] = useState<NotesData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -32,7 +33,7 @@ export default function NotesDetailPage({ params }: { params: Promise<{ id: stri
   useEffect(() => {
     async function fetchNotes() {
       try {
-        const data = await apiRequest<NotesData>(`/notes/${id}`);
+        const data = await request<NotesData>(`/notes/${id}`);
         setNotesData(data);
       } catch (err: any) {
         setError(err.message || 'Failed to load notes');
@@ -41,7 +42,7 @@ export default function NotesDetailPage({ params }: { params: Promise<{ id: stri
       }
     }
     fetchNotes();
-  }, [id]);
+  }, [id, request]);
 
   if (loading) {
     return (

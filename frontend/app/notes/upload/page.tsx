@@ -3,10 +3,11 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/Navbar';
-import { apiRequest } from '@/lib/api';
+import { useApiRequest } from '@/hooks/useApiRequest';
 
 export default function UploadNotesPage() {
   const router = useRouter();
+  const { request } = useApiRequest();
   const [notes, setNotes] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -22,7 +23,7 @@ export default function UploadNotesPage() {
     setError('');
 
     try {
-      const response = await apiRequest<{ id: string }>('/notes', {
+      const response = await request<{ id: string }>('/notes', {
         method: 'POST',
         body: JSON.stringify({ raw_notes: notes }),
       });

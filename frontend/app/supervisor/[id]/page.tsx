@@ -3,7 +3,7 @@
 import { use, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/Navbar';
-import { apiRequest } from '@/lib/api';
+import { useApiRequest } from '@/hooks/useApiRequest';
 
 interface ReflectionResult {
   reflectiveQuestions: string[];
@@ -23,6 +23,7 @@ interface ReflectionData {
 export default function ReflectionDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
   const router = useRouter();
+  const { request } = useApiRequest();
   const [reflectionData, setReflectionData] = useState<ReflectionData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -30,7 +31,7 @@ export default function ReflectionDetailPage({ params }: { params: Promise<{ id:
   useEffect(() => {
     async function fetchReflection() {
       try {
-        const data = await apiRequest<ReflectionData>(`/supervisor/${id}`);
+        const data = await request<ReflectionData>(`/supervisor/${id}`);
         setReflectionData(data);
       } catch (err: any) {
         setError(err.message || 'Failed to load reflection');
@@ -39,7 +40,7 @@ export default function ReflectionDetailPage({ params }: { params: Promise<{ id:
       }
     }
     fetchReflection();
-  }, [id]);
+  }, [id, request]);
 
   if (loading) {
     return (

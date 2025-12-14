@@ -3,10 +3,11 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/Navbar';
-import { apiRequest } from '@/lib/api';
+import { useApiRequest } from '@/hooks/useApiRequest';
 
 export default function SupervisorPage() {
   const router = useRouter();
+  const { request } = useApiRequest();
   const [caseContext, setCaseContext] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -22,7 +23,7 @@ export default function SupervisorPage() {
     setError('');
 
     try {
-      const response = await apiRequest<{ id: string }>('/supervisor', {
+      const response = await request<{ id: string }>('/supervisor', {
         method: 'POST',
         body: JSON.stringify({ case_context: caseContext }),
       });

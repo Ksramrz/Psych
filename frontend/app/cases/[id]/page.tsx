@@ -3,12 +3,13 @@
 import { use, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/Navbar';
-import { apiRequest } from '@/lib/api';
+import { useApiRequest } from '@/hooks/useApiRequest';
 import type { Case, CaseAnalysisResult } from '../../../../shared/types';
 
 export default function CaseDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
   const router = useRouter();
+  const { request } = useApiRequest();
   const [caseData, setCaseData] = useState<Case | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -16,7 +17,7 @@ export default function CaseDetailPage({ params }: { params: Promise<{ id: strin
   useEffect(() => {
     async function fetchCase() {
       try {
-        const data = await apiRequest<Case>(`/cases/${id}`);
+        const data = await request<Case>(`/cases/${id}`);
         setCaseData(data);
       } catch (err: any) {
         setError(err.message || 'Failed to load case');
@@ -25,7 +26,7 @@ export default function CaseDetailPage({ params }: { params: Promise<{ id: strin
       }
     }
     fetchCase();
-  }, [id]);
+  }, [id, request]);
 
   if (loading) {
     return (
