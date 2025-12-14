@@ -21,15 +21,24 @@ const __dirname = dirname(__filename);
 // Load .env from backend directory (works in both dev and production)
 // Try multiple paths to handle different execution contexts
 const envPaths = [
+  resolve('/var/www/clinicsense/backend/.env'),  // Absolute path for production
   join(__dirname, '../.env'),     // From dist/ when running compiled
   resolve(process.cwd(), '.env'),  // From backend/ directory
 ];
 
+let envLoaded = false;
 for (const envPath of envPaths) {
   const result = dotenv.config({ path: envPath });
   if (!result.error) {
+    envLoaded = true;
+    console.log(`✅ Loaded .env from: ${envPath}`);
     break;
   }
+}
+
+if (!envLoaded) {
+  console.warn('⚠️  Warning: Could not load .env file from any expected location');
+  console.warn('   Tried paths:', envPaths);
 }
 
 const app = express();
