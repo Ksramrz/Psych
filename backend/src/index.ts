@@ -69,14 +69,17 @@ app.use(cors({
 }));
 
 // Health check endpoint (before auth - for monitoring)
-app.get('/health', (_req, res) => {
+const healthCheck = (_req: express.Request, res: express.Response) => {
   res.json({ 
     status: 'ok', 
     message: 'ClinicSense API is running',
     timestamp: new Date().toISOString(),
     environment: process.env.NODE_ENV || 'development'
   });
-});
+};
+
+app.get('/health', healthCheck);
+app.get('/api/health', healthCheck);
 
 // Webhooks (before JSON middleware - Stripe webhook needs raw body)
 app.use('/api/webhooks', webhooksRouter);
