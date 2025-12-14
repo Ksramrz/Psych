@@ -114,7 +114,7 @@ clinicsense/
 
 **Production Domain**: `clinic.cashvers.com`
 
-- Frontend: Deployed on Render → `https://clinic.cashvers.com`
-- Backend: Deployed on Render → `https://api.clinic.cashvers.com` (or Render URL)
-- See [DEPLOYMENT.md](./DEPLOYMENT.md) for full deployment guide
+- **Recommended**: DigitalOcean Droplet → See [DIGITALOCEAN_DEPLOYMENT.md](./DIGITALOCEAN_DEPLOYMENT.md)
+- Alternative: Render → See [DEPLOYMENT.md](./DEPLOYMENT.md)
+- Alternative: Hostinger VPS → See [HOSTINGER_DEPLOYMENT.md](./HOSTINGER_DEPLOYMENT.md)
 
