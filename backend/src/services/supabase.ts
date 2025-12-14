@@ -1,13 +1,25 @@
 import { createClient } from '@supabase/supabase-js';
 import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
+import { dirname, join, resolve } from 'path';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // Load .env from backend directory (works in both dev and production)
-dotenv.config({ path: join(__dirname, '../../.env') });
+// Try multiple paths to handle different execution contexts
+const envPaths = [
+  join(__dirname, '../../.env'),  // From dist/ when running compiled
+  join(__dirname, '../.env'),     // From src/ when running compiled
+  resolve(process.cwd(), '.env'),  // From backend/ directory
+];
+
+for (const envPath of envPaths) {
+  const result = dotenv.config({ path: envPath });
+  if (!result.error) {
+    break;
+  }
+}
 
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY;
