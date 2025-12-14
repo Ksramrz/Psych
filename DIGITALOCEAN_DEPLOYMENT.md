@@ -109,11 +109,11 @@ nano .env
 ```env
 NODE_ENV=production
 PORT=5000
-CLERK_SECRET_KEY=sk_test_cbM9zRJdTmsaxZKN807uC1V8HFL9acEB2buq3js7Eb
-CLERK_WEBHOOK_SECRET=
-ANTHROPIC_API_KEY=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
+CLERK_SECRET_KEY=[Your Clerk secret key]
+CLERK_WEBHOOK_SECRET=[Get from Clerk webhook]
+ANTHROPIC_API_KEY=[Your Anthropic API key]
 SUPABASE_URL=https://kklhhxuxinbkujvlfwsm.supabase.co
-SUPABASE_SERVICE_KEY=
+SUPABASE_SERVICE_KEY=[Get from Supabase - service_role key]
 FRONTEND_URL=https://clinic.cashvers.com
 ```
 
