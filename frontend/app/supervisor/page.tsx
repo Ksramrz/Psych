@@ -22,7 +22,7 @@ export default function SupervisorPage() {
     setError('');
 
     try {
-      const response = await apiRequest<{ id: string }>('/api/supervisor', {
+      const response = await apiRequest<{ id: string }>('/supervisor', {
         method: 'POST',
         body: JSON.stringify({ case_context: caseContext }),
       });

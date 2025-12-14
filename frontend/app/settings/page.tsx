@@ -18,7 +18,7 @@ export default function SettingsPage() {
   const handleStorageToggle = async (enabled: boolean) => {
     setLoading(true);
     try {
-      await apiRequest('/api/settings/storage', {
+      await apiRequest('/settings/storage', {
         method: 'PUT',
         body: JSON.stringify({ data_storage_enabled: enabled }),
       });
@@ -35,7 +35,7 @@ export default function SettingsPage() {
   const handleExport = async () => {
     setExporting(true);
     try {
-      const data = await apiRequest('/api/settings/export');
+      const data = await apiRequest('/settings/export');
       const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -117,7 +117,7 @@ export default function SettingsPage() {
                 <button
                   onClick={async () => {
                     try {
-                      const response = await apiRequest<{ url: string }>('/api/subscriptions/checkout', {
+                      const response = await apiRequest<{ url: string }>('/subscriptions/checkout', {
                         method: 'POST',
                         body: JSON.stringify({ planId: 'pro' }),
                       });
@@ -133,7 +133,7 @@ export default function SettingsPage() {
                 <button
                   onClick={async () => {
                     try {
-                      const response = await apiRequest<{ url: string }>('/api/subscriptions/checkout', {
+                      const response = await apiRequest<{ url: string }>('/subscriptions/checkout', {
                         method: 'POST',
                         body: JSON.stringify({ planId: 'clinic' }),
                       });

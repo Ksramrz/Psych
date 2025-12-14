@@ -22,7 +22,7 @@ export default function UploadNotesPage() {
     setError('');
 
     try {
-      const response = await apiRequest<{ id: string }>('/api/notes', {
+      const response = await apiRequest<{ id: string }>('/notes', {
         method: 'POST',
         body: JSON.stringify({ raw_notes: notes }),
       });

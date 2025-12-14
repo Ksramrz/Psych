@@ -22,7 +22,7 @@ export default function EthicsCheckPage() {
     setError('');
 
     try {
-      const response = await apiRequest<{ id: string }>('/api/ethics', {
+      const response = await apiRequest<{ id: string }>('/ethics', {
         method: 'POST',
         body: JSON.stringify({ question }),
       });
