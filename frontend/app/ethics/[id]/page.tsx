@@ -28,7 +28,7 @@ export default function EthicsCheckDetailPage({ params }: { params: Promise<{ id
   useEffect(() => {
     async function fetchCheck() {
       try {
-        const data = await apiRequest<EthicsCheckData>(`/api/ethics/${id}`);
+        const data = await apiRequest<EthicsCheckData>(`/ethics/${id}`);
         setCheckData(data);
       } catch (err: any) {
         setError(err.message || 'Failed to load ethics check');

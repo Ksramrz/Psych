@@ -16,7 +16,7 @@ export default function CaseDetailPage({ params }: { params: Promise<{ id: strin
   useEffect(() => {
     async function fetchCase() {
       try {
-        const data = await apiRequest<Case>(`/api/cases/${id}`);
+        const data = await apiRequest<Case>(`/cases/${id}`);
         setCaseData(data);
       } catch (err: any) {
         setError(err.message || 'Failed to load case');

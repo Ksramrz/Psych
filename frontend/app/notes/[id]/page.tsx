@@ -32,7 +32,7 @@ export default function NotesDetailPage({ params }: { params: Promise<{ id: stri
   useEffect(() => {
     async function fetchNotes() {
       try {
-        const data = await apiRequest<NotesData>(`/api/notes/${id}`);
+        const data = await apiRequest<NotesData>(`/notes/${id}`);
         setNotesData(data);
       } catch (err: any) {
         setError(err.message || 'Failed to load notes');

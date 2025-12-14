@@ -30,7 +30,7 @@ export default function ReflectionDetailPage({ params }: { params: Promise<{ id:
   useEffect(() => {
     async function fetchReflection() {
       try {
-        const data = await apiRequest<ReflectionData>(`/api/supervisor/${id}`);
+        const data = await apiRequest<ReflectionData>(`/supervisor/${id}`);
         setReflectionData(data);
       } catch (err: any) {
         setError(err.message || 'Failed to load reflection');
