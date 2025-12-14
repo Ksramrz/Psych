@@ -7,6 +7,7 @@ import { apiRequest } from '@/lib/api';
 
 export default function NewCasePage() {
   const router = useRouter();
+  const { getToken } = useAuth();
   const [title, setTitle] = useState('');
   const [caseContent, setCaseContent] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -23,10 +24,11 @@ export default function NewCasePage() {
     setError('');
 
     try {
+      const token = await getToken();
       const response = await apiRequest<{ id: string }>('/cases', {
         method: 'POST',
         body: JSON.stringify({ title, case_content: caseContent }),
-      });
+      }, token);
 
       router.push(`/cases/${response.id}`);
     } catch (err: any) {
