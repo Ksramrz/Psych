@@ -5,9 +5,20 @@ import Link from 'next/link';
 import { AppLayout } from '@/components/layout/AppLayout';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
+import { useEffect, useState } from 'react';
+import { Tour } from '@/components/onboarding/Tour';
+import { Tooltip } from '@/components/onboarding/Tooltip';
 
 export default function DashboardPage() {
   const { user, isLoaded } = useUser();
+  const [showTour, setShowTour] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const dismissed = localStorage.getItem('clinicsense-tour-dismissed');
+      if (!dismissed) setShowTour(true);
+    }
+  }, []);
 
   if (!isLoaded) {
     return (
@@ -18,10 +29,30 @@ export default function DashboardPage() {
   }
 
   const quickActions = [
-    { label: 'New Case Analysis', href: '/cases/new', variant: 'primary' as const },
-    { label: 'Upload Notes', href: '/notes/upload', variant: 'secondary' as const },
-    { label: 'Run Ethics Check', href: '/ethics/check', variant: 'ghost' as const },
-    { label: 'Supervisor Reflection', href: '/supervisor', variant: 'ghost' as const },
+    {
+      label: 'New Case Analysis',
+      href: '/cases/new',
+      variant: 'primary' as const,
+      description: 'Run AI-supported analysis: insights, patterns, differentials, interventions.',
+    },
+    {
+      label: 'Upload Notes',
+      href: '/notes/upload',
+      variant: 'secondary' as const,
+      description: 'Summarize raw session notes into clean, structured summaries.',
+    },
+    {
+      label: 'Run Ethics Check',
+      href: '/ethics/check',
+      variant: 'ghost' as const,
+      description: 'Review boundaries and guideline alignment for tricky situations.',
+    },
+    {
+      label: 'Supervisor Reflection',
+      href: '/supervisor',
+      variant: 'ghost' as const,
+      description: 'Get reflective questions and alternative perspectives.',
+    },
   ];
 
   const featureCards = [
@@ -82,10 +113,15 @@ export default function DashboardPage() {
               </p>
               <div className="mt-4 flex flex-wrap gap-3">
                 {quickActions.map((action) => (
-                  <Link key={action.label} href={action.href}>
-                    <Button variant={action.variant}>{action.label}</Button>
-                  </Link>
+                  <Tooltip key={action.label} content={action.description ?? action.label}>
+                    <Link href={action.href}>
+                      <Button variant={action.variant}>{action.label}</Button>
+                    </Link>
+                  </Tooltip>
                 ))}
+                <Button variant="ghost" onClick={() => setShowTour(true)}>
+                  Show tour
+                </Button>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-3 w-full lg:w-80">
@@ -157,6 +193,34 @@ export default function DashboardPage() {
             </Link>
           ))}
         </div>
+
+      {showTour && (
+        <Tour
+          steps={[
+            {
+              title: 'Start with a case',
+              description:
+                'Use “New Case” to run AI-supported analysis: insights, patterns, differentials, and suggested interventions.',
+            },
+            {
+              title: 'Clean up your notes',
+              description:
+                'Upload session notes to get structured summaries and follow-ups. Handy before writing reports.',
+            },
+            {
+              title: 'Stay aligned with ethics',
+              description:
+                'Use Ethics Check to quickly review boundaries and guideline alignment for tricky situations.',
+            },
+            {
+              title: 'Reflect like a supervisor',
+              description:
+                'Supervisor mode gives reflective questions and alternative perspectives to strengthen formulation.',
+            },
+          ]}
+          onClose={() => setShowTour(false)}
+        />
+      )}
       </div>
     </AppLayout>
   );
