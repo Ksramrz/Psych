@@ -31,9 +31,17 @@ if (!envLoaded) {
 }
 
 const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY;
+const supabaseServiceKey =
+  process.env.SUPABASE_SERVICE_KEY ||
+  process.env.SUPABASE_SERVICE_ROLE_KEY ||
+  process.env.SUPABASE_SERVICE_ROLE; // common variants people set
 
 if (!supabaseUrl || !supabaseServiceKey) {
+  console.error('Supabase env check:', {
+    hasUrl: Boolean(supabaseUrl),
+    hasServiceKey: Boolean(supabaseServiceKey),
+    keysPresent: Object.keys(process.env).filter((k) => k.startsWith('SUPABASE_')),
+  });
   throw new Error('Missing Supabase environment variables');
 }
 
@@ -50,7 +58,7 @@ export async function getUserByClerkId(clerkId: string) {
   const { data, error } = await supabase
     .from('users')
     .select('*')
-    .eq('clerk_id', clerkId)
+    .eq('clerk_user_id', clerkId)
     .single();
 
   if (error && error.code !== 'PGRST116') {
@@ -66,12 +74,12 @@ export async function syncUserFromClerk(clerkId: string, email: string) {
     .from('users')
     .upsert(
       {
-        clerk_id: clerkId,
+        clerk_user_id: clerkId,
         email,
         updated_at: new Date().toISOString(),
       },
       {
-        onConflict: 'clerk_id',
+        onConflict: 'clerk_user_id',
       }
     )
     .select()
