@@ -147,3 +147,5 @@ CREATE POLICY "Users can manage own reflections" ON supervisor_reflections
     user_id IN (SELECT id FROM users WHERE clerk_id = auth.uid()::text)
   );
 
+
+

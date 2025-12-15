@@ -70,3 +70,5 @@ To set up the initial knowledge base, you'll need to:
 - The system retrieves top-k most relevant documents for each query
 - Retrieved context is included in AI prompts to improve accuracy
 
+
+

@@ -96,3 +96,5 @@ else
     echo "Run 'cd frontend && npm run dev' in another terminal"
 fi
 
+
+
