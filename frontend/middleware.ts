@@ -36,6 +36,8 @@ export const config = {
     '/ethics/:path*',
     '/supervisor/:path*',
     '/settings/:path*',
+    '/admin/:path*',
+    '/api/files/:path*',
     '/api/:path*',
   ],
 };
