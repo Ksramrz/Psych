@@ -11,7 +11,8 @@ export async function apiRequest<T>(
     let authToken = token;
     if (!authToken && typeof window !== 'undefined') {
       try {
-        const { getToken } = await import('@clerk/nextjs');
+        // Use server-safe Clerk import to grab token on the client when available
+        const { getToken } = await import('@clerk/nextjs/server');
         authToken = await getToken();
       } catch (err) {
         console.warn('Could not get Clerk token:', err);
