@@ -1,18 +1,19 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 import { NextResponse } from 'next/server';
 
-// Marketing / public routes stay open; everything else requires auth.
-const isPublicRoute = createRouteMatcher([
-  '/',
-  '/sign-in(.*)',
-  '/sign-up(.*)',
+// Only protect authenticated app areas; leave marketing/public routes untouched.
+const isProtectedRoute = createRouteMatcher([
+  '/dashboard(.*)',
+  '/cases(.*)',
+  '/notes(.*)',
+  '/ethics(.*)',
+  '/supervisor(.*)',
+  '/settings(.*)',
+  '/api(.*)',
 ]);
 
 export default clerkMiddleware(async (auth, req) => {
-  const { pathname } = req.nextUrl;
-
-  // Explicitly allow the landing page to bypass any auth checks.
-  if (pathname === '/' || isPublicRoute(req)) {
+  if (!isProtectedRoute(req)) {
     return NextResponse.next();
   }
 
@@ -28,8 +29,13 @@ export default clerkMiddleware(async (auth, req) => {
 
 export const config = {
   matcher: [
-    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
-    '/(api|trpc)(.*)',
+    '/dashboard/:path*',
+    '/cases/:path*',
+    '/notes/:path*',
+    '/ethics/:path*',
+    '/supervisor/:path*',
+    '/settings/:path*',
+    '/api/:path*',
   ],
 };
 
