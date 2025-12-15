@@ -6,17 +6,25 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export function loadPromptTemplate(templateName: string): string {
-  const templatePath = path.join(
-    __dirname,
-    '../../prompts',
-    `${templateName}.md`
-  );
-  try {
-    return fs.readFileSync(templatePath, 'utf-8');
-  } catch (error) {
-    console.error(`Error loading prompt template ${templateName}:`, error);
-    throw new Error(`Prompt template ${templateName} not found`);
+  // Support both src/ (ts-node) and dist/ (compiled) by trying multiple roots
+  const candidatePaths = [
+    path.join(__dirname, '../../prompts', `${templateName}.md`),       // dist/services/ai -> dist/prompts (if copied)
+    path.join(__dirname, '../../../prompts', `${templateName}.md`),    // dist/services/ai -> backend/prompts
+    path.join(process.cwd(), 'prompts', `${templateName}.md`),         // cwd/prompts (runtime cwd = backend)
+  ];
+
+  for (const templatePath of candidatePaths) {
+    try {
+      if (fs.existsSync(templatePath)) {
+        return fs.readFileSync(templatePath, 'utf-8');
+      }
+    } catch (error) {
+      // continue to next path
+    }
   }
+
+  console.error(`Error loading prompt template ${templateName}: tried:`, candidatePaths);
+  throw new Error(`Prompt template ${templateName} not found`);
 }
 
 export function buildPrompt(
