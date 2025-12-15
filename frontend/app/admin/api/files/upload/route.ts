@@ -57,6 +57,16 @@ export async function POST(request: NextRequest) {
 
     try {
       await writeFile(filePath, buffer);
+      console.log('File saved successfully to:', filePath);
+      
+      // Verify file exists
+      const { access } = await import('fs/promises');
+      try {
+        await access(filePath);
+        console.log('File verified to exist at:', filePath);
+      } catch {
+        console.error('File was written but cannot be accessed!');
+      }
     } catch (err: any) {
       console.error('Error writing file:', err);
       return NextResponse.json({ error: 'Failed to save file on server' }, { status: 500 });
@@ -66,6 +76,7 @@ export async function POST(request: NextRequest) {
       success: true,
       url: `/images/${sanitizedFileName}`,
       fileName: sanitizedFileName,
+      savedPath: filePath, // Debug info
     });
   } catch (error) {
     console.error('Error uploading file:', error);
