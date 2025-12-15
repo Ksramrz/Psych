@@ -2,8 +2,9 @@
 
 import { use, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Navbar from '@/components/Navbar';
+import { AppLayout } from '@/components/layout/AppLayout';
 import { useApiRequest } from '@/hooks/useApiRequest';
+import { Card } from '@/components/ui/Card';
 
 interface EthicsCheckData {
   id: string;
@@ -42,29 +43,21 @@ export default function EthicsCheckDetailPage({ params }: { params: Promise<{ id
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50">
-        <Navbar />
-        <main className="max-w-4xl mx-auto py-6 sm:px-6 lg:px-8">
-          <div className="px-4 py-6 sm:px-0">
-            <div className="text-center">Loading...</div>
-          </div>
-        </main>
-      </div>
+      <AppLayout>
+        <div className="text-center py-10 text-slate-500">Loading...</div>
+      </AppLayout>
     );
   }
 
   if (error || !checkData) {
     return (
-      <div className="min-h-screen bg-gray-50">
-        <Navbar />
-        <main className="max-w-4xl mx-auto py-6 sm:px-6 lg:px-8">
-          <div className="px-4 py-6 sm:px-0">
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
-              {error || 'Ethics check not found'}
-            </div>
+      <AppLayout>
+        <Card>
+          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
+            {error || 'Ethics check not found'}
           </div>
-        </main>
-      </div>
+        </Card>
+      </AppLayout>
     );
   }
 
@@ -76,70 +69,62 @@ export default function EthicsCheckDetailPage({ params }: { params: Promise<{ id
   }[response.riskLevel];
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Navbar />
-      <main className="max-w-4xl mx-auto py-6 sm:px-6 lg:px-8">
-        <div className="px-4 py-6 sm:px-0">
-          <div className="mb-6">
-            <button
-              onClick={() => router.back()}
-              className="text-sm text-gray-500 hover:text-gray-700 mb-4"
-            >
-              ← Back
-            </button>
-            <h1 className="text-3xl font-bold text-gray-900">Ethics Check Result</h1>
-            <p className="text-sm text-gray-500 mt-2">
-              Created {new Date(checkData.created_at).toLocaleDateString()}
-            </p>
-          </div>
-
-          <div className="space-y-6">
-            <div className="bg-white shadow rounded-lg p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Question</h2>
-              <p className="text-gray-700">{checkData.question}</p>
-            </div>
-
-            <div className="bg-white shadow rounded-lg p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-semibold text-gray-900">Assessment</h2>
-                <div className={`px-3 py-1 rounded-full text-sm font-medium border ${riskColor}`}>
-                  {response.riskLevel.toUpperCase()} RISK
-                </div>
-              </div>
-              <div className="mb-4">
-                <span className="text-sm font-medium text-gray-700">Ethical: </span>
-                <span className={`font-semibold ${response.isEthical ? 'text-green-600' : 'text-red-600'}`}>
-                  {response.isEthical ? 'Yes' : 'No'}
-                </span>
-              </div>
-              <p className="text-gray-700">{response.explanation}</p>
-            </div>
-
-            {response.concerns.length > 0 && (
-              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
-                <h2 className="text-xl font-semibold text-yellow-900 mb-4">Concerns</h2>
-                <ul className="list-disc list-inside space-y-2">
-                  {response.concerns.map((concern, i) => (
-                    <li key={i} className="text-yellow-800">{concern}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            {response.recommendations.length > 0 && (
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
-                <h2 className="text-xl font-semibold text-blue-900 mb-4">Recommendations</h2>
-                <ul className="list-disc list-inside space-y-2">
-                  {response.recommendations.map((recommendation, i) => (
-                    <li key={i} className="text-blue-800">{recommendation}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
+    <AppLayout>
+      <div className="max-w-4xl mx-auto space-y-6">
+        <div className="mb-4">
+          <button
+            onClick={() => router.back()}
+            className="text-sm text-slate-500 hover:text-primary mb-2"
+          >
+            ← Back
+          </button>
+          <h1 className="text-3xl font-bold text-foreground">Ethics Check Result</h1>
+          <p className="text-sm text-slate-500 mt-1">
+            Created {new Date(checkData.created_at).toLocaleDateString()}
+          </p>
         </div>
-      </main>
-    </div>
+
+        <Card title="Question">
+          <p className="text-slate-700">{checkData.question}</p>
+        </Card>
+
+        <Card title="Assessment">
+          <div className="flex items-center justify-between mb-4">
+            <span className="text-sm font-medium text-slate-700">Risk Level</span>
+            <div className={`px-3 py-1 rounded-full text-sm font-medium border ${riskColor}`}>
+              {response.riskLevel.toUpperCase()} RISK
+            </div>
+          </div>
+          <div className="mb-4">
+            <span className="text-sm font-medium text-slate-700">Ethical: </span>
+            <span className={`font-semibold ${response.isEthical ? 'text-success' : 'text-error'}`}>
+              {response.isEthical ? 'Yes' : 'No'}
+            </span>
+          </div>
+          <p className="text-slate-700">{response.explanation}</p>
+        </Card>
+
+        {response.concerns.length > 0 && (
+          <Card title="Concerns">
+            <ul className="list-disc list-inside space-y-2">
+              {response.concerns.map((concern, i) => (
+                <li key={i} className="text-foreground">{concern}</li>
+              ))}
+            </ul>
+          </Card>
+        )}
+
+        {response.recommendations.length > 0 && (
+          <Card title="Recommendations">
+            <ul className="list-disc list-inside space-y-2">
+              {response.recommendations.map((recommendation, i) => (
+                <li key={i} className="text-foreground">{recommendation}</li>
+              ))}
+            </ul>
+          </Card>
+        )}
+      </div>
+    </AppLayout>
   );
 }
 

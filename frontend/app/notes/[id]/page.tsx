@@ -2,8 +2,9 @@
 
 import { use, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Navbar from '@/components/Navbar';
+import { AppLayout } from '@/components/layout/AppLayout';
 import { useApiRequest } from '@/hooks/useApiRequest';
+import { Card } from '@/components/ui/Card';
 
 interface NotesSummary {
   sessionOverview: string;
@@ -46,124 +47,103 @@ export default function NotesDetailPage({ params }: { params: Promise<{ id: stri
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50">
-        <Navbar />
-        <main className="max-w-4xl mx-auto py-6 sm:px-6 lg:px-8">
-          <div className="px-4 py-6 sm:px-0">
-            <div className="text-center">Loading...</div>
-          </div>
-        </main>
-      </div>
+      <AppLayout>
+        <div className="text-center py-10 text-slate-500">Loading...</div>
+      </AppLayout>
     );
   }
 
   if (error || !notesData) {
     return (
-      <div className="min-h-screen bg-gray-50">
-        <Navbar />
-        <main className="max-w-4xl mx-auto py-6 sm:px-6 lg:px-8">
-          <div className="px-4 py-6 sm:px-0">
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
-              {error || 'Notes not found'}
-            </div>
+      <AppLayout>
+        <Card>
+          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
+            {error || 'Notes not found'}
           </div>
-        </main>
-      </div>
+        </Card>
+      </AppLayout>
     );
   }
 
   const summary = notesData.summary;
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Navbar />
-      <main className="max-w-4xl mx-auto py-6 sm:px-6 lg:px-8">
-        <div className="px-4 py-6 sm:px-0">
-          <div className="mb-6">
-            <button
-              onClick={() => router.back()}
-              className="text-sm text-gray-500 hover:text-gray-700 mb-4"
-            >
-              ← Back
-            </button>
-            <h1 className="text-3xl font-bold text-gray-900">Session Notes Summary</h1>
-            <p className="text-sm text-gray-500 mt-2">
-              Created {new Date(notesData.created_at).toLocaleDateString()}
-            </p>
-          </div>
-
-          {summary ? (
-            <div className="space-y-6">
-              <div className="bg-white shadow rounded-lg p-6">
-                <h2 className="text-xl font-semibold text-gray-900 mb-4">Session Overview</h2>
-                <p className="text-gray-700">{summary.sessionOverview}</p>
-              </div>
-
-              <div className="bg-white shadow rounded-lg p-6">
-                <h2 className="text-xl font-semibold text-gray-900 mb-4">Key Topics Discussed</h2>
-                <ul className="list-disc list-inside space-y-2">
-                  {summary.keyTopics.map((topic, i) => (
-                    <li key={i} className="text-gray-700">{topic}</li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="bg-white shadow rounded-lg p-6">
-                <h2 className="text-xl font-semibold text-gray-900 mb-4">Interventions Used</h2>
-                <ul className="list-disc list-inside space-y-2">
-                  {summary.interventionsUsed.map((intervention, i) => (
-                    <li key={i} className="text-gray-700">{intervention}</li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="bg-white shadow rounded-lg p-6">
-                <h2 className="text-xl font-semibold text-gray-900 mb-4">Client Response</h2>
-                <p className="text-gray-700">{summary.clientResponse}</p>
-              </div>
-
-              <div className="bg-white shadow rounded-lg p-6">
-                <h2 className="text-xl font-semibold text-gray-900 mb-4">Progress Notes</h2>
-                <p className="text-gray-700">{summary.progressNotes}</p>
-              </div>
-
-              {summary.followUpItems.length > 0 && (
-                <div className="bg-white shadow rounded-lg p-6">
-                  <h2 className="text-xl font-semibold text-gray-900 mb-4">Follow-up Items</h2>
-                  <ul className="list-disc list-inside space-y-2">
-                    {summary.followUpItems.map((item, i) => (
-                      <li key={i} className="text-gray-700">{item}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {summary.concerns.length > 0 && (
-                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
-                  <h2 className="text-xl font-semibold text-yellow-900 mb-4">Concerns</h2>
-                  <ul className="list-disc list-inside space-y-2">
-                    {summary.concerns.map((concern, i) => (
-                      <li key={i} className="text-yellow-800">{concern}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-          ) : (
-            <div className="bg-white shadow rounded-lg p-6">
-              <p className="text-gray-500">Summary not available</p>
-            </div>
-          )}
-
-          <div className="mt-6 bg-white shadow rounded-lg p-6">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Original Notes</h2>
-            <div className="prose max-w-none">
-              <p className="text-gray-700 whitespace-pre-wrap">{notesData.raw_notes}</p>
-            </div>
-          </div>
+    <AppLayout>
+      <div className="max-w-4xl mx-auto space-y-6">
+        <div className="mb-4">
+          <button
+            onClick={() => router.back()}
+            className="text-sm text-slate-500 hover:text-primary mb-2"
+          >
+            ← Back
+          </button>
+          <h1 className="text-3xl font-bold text-foreground">Session Notes Summary</h1>
+          <p className="text-sm text-slate-500 mt-1">
+            Created {new Date(notesData.created_at).toLocaleDateString()}
+          </p>
         </div>
-      </main>
-    </div>
+
+        {summary ? (
+          <div className="space-y-4">
+            <Card title="Session Overview">
+              <p className="text-slate-700">{summary.sessionOverview}</p>
+            </Card>
+
+            <Card title="Key Topics Discussed">
+              <ul className="list-disc list-inside space-y-2">
+                {summary.keyTopics.map((topic, i) => (
+                  <li key={i} className="text-foreground">{topic}</li>
+                ))}
+              </ul>
+            </Card>
+
+            <Card title="Interventions Used">
+              <ul className="list-disc list-inside space-y-2">
+                {summary.interventionsUsed.map((intervention, i) => (
+                  <li key={i} className="text-foreground">{intervention}</li>
+                ))}
+              </ul>
+            </Card>
+
+            <Card title="Client Response">
+              <p className="text-slate-700">{summary.clientResponse}</p>
+            </Card>
+
+            <Card title="Progress Notes">
+              <p className="text-slate-700">{summary.progressNotes}</p>
+            </Card>
+
+            {summary.followUpItems.length > 0 && (
+              <Card title="Follow-up Items">
+                <ul className="list-disc list-inside space-y-2">
+                  {summary.followUpItems.map((item, i) => (
+                    <li key={i} className="text-foreground">{item}</li>
+                  ))}
+                </ul>
+              </Card>
+            )}
+
+            {summary.concerns.length > 0 && (
+              <Card title="Concerns">
+                <ul className="list-disc list-inside space-y-2">
+                  {summary.concerns.map((concern, i) => (
+                    <li key={i} className="text-foreground">{concern}</li>
+                  ))}
+                </ul>
+              </Card>
+            )}
+          </div>
+        ) : (
+          <Card>
+            <p className="text-slate-500">Summary not available</p>
+          </Card>
+        )}
+
+        <Card title="Original Notes">
+          <p className="text-slate-700 whitespace-pre-wrap">{notesData.raw_notes}</p>
+        </Card>
+      </div>
+    </AppLayout>
   );
 }
 

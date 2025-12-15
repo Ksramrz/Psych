@@ -1,8 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Navbar from '@/components/Navbar';
+import { AppLayout } from '@/components/layout/AppLayout';
 import { useApiRequest } from '@/hooks/useApiRequest';
+import { Button } from '@/components/ui/Button';
 
 export default function SettingsPage() {
   const { request } = useApiRequest();
@@ -56,103 +57,97 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Navbar />
-      <main className="max-w-4xl mx-auto py-6 sm:px-6 lg:px-8">
-        <div className="px-4 py-6 sm:px-0">
-          <h1 className="text-3xl font-bold text-gray-900 mb-6">Settings</h1>
+    <AppLayout>
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-3xl font-bold text-foreground mb-6">Settings</h1>
 
-          {message && (
-            <div className={`mb-4 px-4 py-3 rounded ${
-              message.includes('Failed') 
-                ? 'bg-red-50 border border-red-200 text-red-700' 
+        {message && (
+          <div
+            className={`mb-4 px-4 py-3 rounded ${
+              message.includes('Failed')
+                ? 'bg-red-50 border border-red-200 text-red-700'
                 : 'bg-green-50 border border-green-200 text-green-700'
-            }`}>
-              {message}
-            </div>
-          )}
+            }`}
+          >
+            {message}
+          </div>
+        )}
 
-          <div className="bg-white shadow rounded-lg p-6 space-y-6">
-            <div>
-              <h2 className="text-lg font-medium text-gray-900 mb-4">Privacy & Data</h2>
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-900">Data Storage</p>
-                  <p className="text-sm text-gray-500">
-                    {dataStorage
-                      ? 'Your data is stored securely and can be exported.'
-                      : 'Data will be deleted after 24 hours. Nothing is stored permanently.'}
-                  </p>
-                </div>
-                <label className="relative inline-flex items-center cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={dataStorage}
-                    onChange={(e) => handleStorageToggle(e.target.checked)}
-                    disabled={loading}
-                    className="sr-only peer"
-                  />
-                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600 disabled:opacity-50"></div>
-                </label>
+        <div className="bg-white dark:bg-slate-900 border border-border shadow-sm rounded-lg p-6 space-y-6">
+          <div>
+            <h2 className="text-lg font-medium text-foreground mb-4">Privacy & Data</h2>
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-foreground">Data Storage</p>
+                <p className="text-sm text-slate-500">
+                  {dataStorage
+                    ? 'Your data is stored securely and can be exported.'
+                    : 'Data will be deleted after 24 hours. Nothing is stored permanently.'}
+                </p>
               </div>
+              <label className="relative inline-flex items-center cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={dataStorage}
+                  onChange={(e) => handleStorageToggle(e.target.checked)}
+                  disabled={loading}
+                  className="sr-only peer"
+                />
+                <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary disabled:opacity-50"></div>
+              </label>
             </div>
+          </div>
 
-            <div>
-              <h2 className="text-lg font-medium text-gray-900 mb-4">Export Data</h2>
-              <p className="text-sm text-gray-500 mb-4">
-                Download all your stored data in JSON format.
-              </p>
-              <button
-                onClick={handleExport}
-                disabled={exporting}
-                className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50"
+          <div>
+            <h2 className="text-lg font-medium text-foreground mb-4">Export Data</h2>
+            <p className="text-sm text-slate-500 mb-4">
+              Download all your stored data in JSON format.
+            </p>
+            <Button variant="outline" onClick={handleExport} disabled={exporting} isLoading={exporting}>
+              Export All Data
+            </Button>
+          </div>
+
+          <div>
+            <h2 className="text-lg font-medium text-foreground mb-4">Subscription</h2>
+            <p className="text-sm text-slate-500 mb-4">Current plan: Free</p>
+            <div className="space-y-3">
+              <Button
+                onClick={async () => {
+                  try {
+                    const response = await request<{ url: string }>('/subscriptions/checkout', {
+                      method: 'POST',
+                      body: JSON.stringify({ planId: 'pro' }),
+                    });
+                    window.location.href = response.url;
+                  } catch (error) {
+                    setMessage('Failed to start checkout');
+                  }
+                }}
               >
-                {exporting ? 'Exporting...' : 'Export All Data'}
-              </button>
-            </div>
-
-            <div>
-              <h2 className="text-lg font-medium text-gray-900 mb-4">Subscription</h2>
-              <p className="text-sm text-gray-500 mb-4">Current plan: Free</p>
-              <div className="space-y-3">
-                <button
-                  onClick={async () => {
-                    try {
-                      const response = await request<{ url: string }>('/subscriptions/checkout', {
-                        method: 'POST',
-                        body: JSON.stringify({ planId: 'pro' }),
-                      });
-                      window.location.href = response.url;
-                    } catch (error) {
-                      setMessage('Failed to start checkout');
-                    }
-                  }}
-                  className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
-                >
-                  Upgrade to Pro ($29/month)
-                </button>
-                <button
-                  onClick={async () => {
-                    try {
-                      const response = await request<{ url: string }>('/subscriptions/checkout', {
-                        method: 'POST',
-                        body: JSON.stringify({ planId: 'clinic' }),
-                      });
-                      window.location.href = response.url;
-                    } catch (error) {
-                      setMessage('Failed to start checkout');
-                    }
-                  }}
-                  className="ml-2 px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
-                >
-                  Upgrade to Clinic ($99/month)
-                </button>
-              </div>
+                Upgrade to Pro ($29/month)
+              </Button>
+              <Button
+                variant="outline"
+                onClick={async () => {
+                  try {
+                    const response = await request<{ url: string }>('/subscriptions/checkout', {
+                      method: 'POST',
+                      body: JSON.stringify({ planId: 'clinic' }),
+                    });
+                    window.location.href = response.url;
+                  } catch (error) {
+                    setMessage('Failed to start checkout');
+                  }
+                }}
+              >
+                Upgrade to Clinic ($99/month)
+              </Button>
             </div>
           </div>
         </div>
-      </main>
-    </div>
+      </div>
+    </AppLayout>
   );
 }
 

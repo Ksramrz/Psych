@@ -2,8 +2,9 @@
 
 import { use, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Navbar from '@/components/Navbar';
+import { AppLayout } from '@/components/layout/AppLayout';
 import { useApiRequest } from '@/hooks/useApiRequest';
+import { Card } from '@/components/ui/Card';
 
 interface ReflectionResult {
   reflectiveQuestions: string[];
@@ -44,106 +45,87 @@ export default function ReflectionDetailPage({ params }: { params: Promise<{ id:
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50">
-        <Navbar />
-        <main className="max-w-4xl mx-auto py-6 sm:px-6 lg:px-8">
-          <div className="px-4 py-6 sm:px-0">
-            <div className="text-center">Loading...</div>
-          </div>
-        </main>
-      </div>
+      <AppLayout>
+        <div className="text-center py-10 text-slate-500">Loading...</div>
+      </AppLayout>
     );
   }
 
   if (error || !reflectionData) {
     return (
-      <div className="min-h-screen bg-gray-50">
-        <Navbar />
-        <main className="max-w-4xl mx-auto py-6 sm:px-6 lg:px-8">
-          <div className="px-4 py-6 sm:px-0">
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
-              {error || 'Reflection not found'}
-            </div>
+      <AppLayout>
+        <Card>
+          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
+            {error || 'Reflection not found'}
           </div>
-        </main>
-      </div>
+        </Card>
+      </AppLayout>
     );
   }
 
   const { reflection_result } = reflectionData;
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Navbar />
-      <main className="max-w-4xl mx-auto py-6 sm:px-6 lg:px-8">
-        <div className="px-4 py-6 sm:px-0">
-          <div className="mb-6">
-            <button
-              onClick={() => router.back()}
-              className="text-sm text-gray-500 hover:text-gray-700 mb-4"
-            >
-              ← Back
-            </button>
-            <h1 className="text-3xl font-bold text-gray-900">Supervisor Reflection</h1>
-            <p className="text-sm text-gray-500 mt-2">
-              Created {new Date(reflectionData.created_at).toLocaleDateString()}
-            </p>
-          </div>
-
-          <div className="space-y-6">
-            <div className="bg-white shadow rounded-lg p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Case Context</h2>
-              <p className="text-gray-700 whitespace-pre-wrap">{reflectionData.case_context}</p>
-            </div>
-
-            <div className="bg-white shadow rounded-lg p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Reflective Questions</h2>
-              <ul className="list-disc list-inside space-y-2">
-                {reflection_result.reflectiveQuestions.map((question, i) => (
-                  <li key={i} className="text-gray-700">{question}</li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="bg-white shadow rounded-lg p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Alternative Perspectives</h2>
-              <ul className="list-disc list-inside space-y-2">
-                {reflection_result.alternativePerspectives.map((perspective, i) => (
-                  <li key={i} className="text-gray-700">{perspective}</li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="bg-white shadow rounded-lg p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Assessment Suggestions</h2>
-              <ul className="list-disc list-inside space-y-2">
-                {reflection_result.assessmentSuggestions.map((suggestion, i) => (
-                  <li key={i} className="text-gray-700">{suggestion}</li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="bg-white shadow rounded-lg p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Intervention Ideas</h2>
-              <ul className="list-disc list-inside space-y-2">
-                {reflection_result.interventionIdeas.map((idea, i) => (
-                  <li key={i} className="text-gray-700">{idea}</li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
-              <h2 className="text-xl font-semibold text-blue-900 mb-4">Important Considerations</h2>
-              <ul className="list-disc list-inside space-y-2">
-                {reflection_result.considerations.map((consideration, i) => (
-                  <li key={i} className="text-blue-800">{consideration}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
+    <AppLayout>
+      <div className="max-w-4xl mx-auto space-y-6">
+        <div className="mb-4">
+          <button
+            onClick={() => router.back()}
+            className="text-sm text-slate-500 hover:text-primary mb-2"
+          >
+            ← Back
+          </button>
+          <h1 className="text-3xl font-bold text-foreground">Supervisor Reflection</h1>
+          <p className="text-sm text-slate-500 mt-1">
+            Created {new Date(reflectionData.created_at).toLocaleDateString()}
+          </p>
         </div>
-      </main>
-    </div>
+
+        <Card title="Case Context">
+          <p className="text-slate-700 whitespace-pre-wrap">{reflectionData.case_context}</p>
+        </Card>
+
+        <Card title="Reflective Questions">
+          <ul className="list-disc list-inside space-y-2">
+            {reflection_result.reflectiveQuestions.map((question, i) => (
+              <li key={i} className="text-foreground">{question}</li>
+            ))}
+          </ul>
+        </Card>
+
+        <Card title="Alternative Perspectives">
+          <ul className="list-disc list-inside space-y-2">
+            {reflection_result.alternativePerspectives.map((perspective, i) => (
+              <li key={i} className="text-foreground">{perspective}</li>
+            ))}
+          </ul>
+        </Card>
+
+        <Card title="Assessment Suggestions">
+          <ul className="list-disc list-inside space-y-2">
+            {reflection_result.assessmentSuggestions.map((suggestion, i) => (
+              <li key={i} className="text-foreground">{suggestion}</li>
+            ))}
+          </ul>
+        </Card>
+
+        <Card title="Intervention Ideas">
+          <ul className="list-disc list-inside space-y-2">
+            {reflection_result.interventionIdeas.map((idea, i) => (
+              <li key={i} className="text-foreground">{idea}</li>
+            ))}
+          </ul>
+        </Card>
+
+        <Card title="Important Considerations">
+          <ul className="list-disc list-inside space-y-2">
+            {reflection_result.considerations.map((consideration, i) => (
+              <li key={i} className="text-foreground">{consideration}</li>
+            ))}
+          </ul>
+        </Card>
+      </div>
+    </AppLayout>
   );
 }
 

@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Navbar from '@/components/Navbar';
+import { AppLayout } from '@/components/layout/AppLayout';
+import { Button } from '@/components/ui/Button';
 import { useApiRequest } from '@/hooks/useApiRequest';
 
 export default function UploadNotesPage() {
@@ -47,66 +48,55 @@ export default function UploadNotesPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Navbar />
-      <main className="max-w-4xl mx-auto py-6 sm:px-6 lg:px-8">
-        <div className="px-4 py-6 sm:px-0">
-          <h1 className="text-3xl font-bold text-gray-900 mb-6">Upload Session Notes</h1>
+    <AppLayout>
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-3xl font-bold text-foreground mb-6">Upload Session Notes</h1>
 
-          <form onSubmit={handleSubmit} className="bg-white shadow rounded-lg p-6">
-            {error && (
-              <div className="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
-                {error}
-              </div>
-            )}
-
-            <div className="mb-6">
-              <label htmlFor="file" className="block text-sm font-medium text-gray-700 mb-2">
-                Upload File (Optional)
-              </label>
-              <input
-                type="file"
-                id="file"
-                onChange={handleFileUpload}
-                accept=".txt,.doc,.docx"
-                className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-              />
+        <form onSubmit={handleSubmit} className="bg-white dark:bg-slate-900 border border-border shadow-sm rounded-lg p-6 space-y-6">
+          {error && (
+            <div className="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
+              {error}
             </div>
+          )}
 
-            <div className="mb-6">
-              <label htmlFor="notes" className="block text-sm font-medium text-gray-700 mb-2">
-                Or Paste Notes Here
-              </label>
-              <textarea
-                id="notes"
-                value={notes}
-                onChange={(e) => setNotes(e.target.value)}
-                rows={15}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Paste your session notes here..."
-              />
-            </div>
+          <div className="space-y-2">
+            <label htmlFor="file" className="block text-sm font-medium text-slate-700">
+              Upload File (Optional)
+            </label>
+            <input
+              type="file"
+              id="file"
+              onChange={handleFileUpload}
+              accept=".txt,.doc,.docx"
+              className="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20"
+            />
+          </div>
 
-            <div className="flex justify-end space-x-3">
-              <button
-                type="button"
-                onClick={() => router.back()}
-                className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                disabled={isLoading}
-                className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 disabled:opacity-50"
-              >
-                {isLoading ? 'Processing...' : 'Summarize Notes'}
-              </button>
-            </div>
-          </form>
-        </div>
-      </main>
-    </div>
+          <div className="space-y-2">
+            <label htmlFor="notes" className="block text-sm font-medium text-slate-700">
+              Or Paste Notes Here
+            </label>
+            <textarea
+              id="notes"
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+              rows={15}
+              className="w-full px-3 py-2 border border-border rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
+              placeholder="Paste your session notes here..."
+            />
+          </div>
+
+          <div className="flex justify-end space-x-3">
+            <Button type="button" variant="outline" onClick={() => router.back()}>
+              Cancel
+            </Button>
+            <Button type="submit" disabled={isLoading} isLoading={isLoading}>
+              Summarize Notes
+            </Button>
+          </div>
+        </form>
+      </div>
+    </AppLayout>
   );
 }
 

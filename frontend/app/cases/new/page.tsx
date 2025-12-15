@@ -2,8 +2,9 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Navbar from '@/components/Navbar';
+import { AppLayout } from '@/components/layout/AppLayout';
 import { useApiRequest } from '@/hooks/useApiRequest';
+import { Button } from '@/components/ui/Button';
 
 export default function NewCasePage() {
   const router = useRouter();
@@ -37,67 +38,56 @@ export default function NewCasePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Navbar />
-      <main className="max-w-4xl mx-auto py-6 sm:px-6 lg:px-8">
-        <div className="px-4 py-6 sm:px-0">
-          <h1 className="text-3xl font-bold text-gray-900 mb-6">New Case Analysis</h1>
+    <AppLayout>
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-3xl font-bold text-foreground mb-6">New Case Analysis</h1>
 
-          <form onSubmit={handleSubmit} className="bg-white shadow rounded-lg p-6">
-            {error && (
-              <div className="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
-                {error}
-              </div>
-            )}
-
-            <div className="mb-4">
-              <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-2">
-                Case Title
-              </label>
-              <input
-                type="text"
-                id="title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                placeholder="e.g., Client presenting with anxiety"
-              />
+        <form onSubmit={handleSubmit} className="bg-white dark:bg-slate-900 border border-border shadow-sm rounded-lg p-6">
+          {error && (
+            <div className="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
+              {error}
             </div>
+          )}
 
-            <div className="mb-6">
-              <label htmlFor="content" className="block text-sm font-medium text-gray-700 mb-2">
-                Case Details
-              </label>
-              <textarea
-                id="content"
-                value={caseContent}
-                onChange={(e) => setCaseContent(e.target.value)}
-                rows={15}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Describe the case in detail..."
-              />
-            </div>
+          <div className="mb-4">
+            <label htmlFor="title" className="block text-sm font-medium text-slate-700 mb-2">
+              Case Title
+            </label>
+            <input
+              type="text"
+              id="title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              className="w-full px-3 py-2 border border-border rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
+              placeholder="e.g., Client presenting with anxiety"
+            />
+          </div>
 
-            <div className="flex justify-end space-x-3">
-              <button
-                type="button"
-                onClick={() => router.back()}
-                className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                disabled={isLoading}
-                className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 disabled:opacity-50"
-              >
-                {isLoading ? 'Analyzing...' : 'Analyze Case'}
-              </button>
-            </div>
-          </form>
-        </div>
-      </main>
-    </div>
+          <div className="mb-6">
+            <label htmlFor="content" className="block text-sm font-medium text-slate-700 mb-2">
+              Case Details
+            </label>
+            <textarea
+              id="content"
+              value={caseContent}
+              onChange={(e) => setCaseContent(e.target.value)}
+              rows={15}
+              className="w-full px-3 py-2 border border-border rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
+              placeholder="Describe the case in detail..."
+            />
+          </div>
+
+          <div className="flex justify-end space-x-3">
+            <Button type="button" variant="outline" onClick={() => router.back()}>
+              Cancel
+            </Button>
+            <Button type="submit" disabled={isLoading} isLoading={isLoading}>
+              Analyze Case
+            </Button>
+          </div>
+        </form>
+      </div>
+    </AppLayout>
   );
 }
 
