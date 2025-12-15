@@ -45,3 +45,4 @@ Place your images here. The paths in the code reference images from this directo
    - Testimonial avatars: 200x200px (square)
    - Step images: 600x400px
    - Hero image: 1200x800px
+

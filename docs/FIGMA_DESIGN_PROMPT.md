@@ -80,3 +80,4 @@ Modern SaaS (Stripe, Linear, Vercel). Healthcare software (modern SimplePractice
 - Clean, professional, scannable
 - Subtle AI-themed elements (minimal)
 - Key message: "Complete AI-powered platform helping psychologists save time, reduce risk, improve outcomes - all in one solution"
+

@@ -50,3 +50,4 @@ After deploying, test:
 3. After signing in - should redirect to `/dashboard`
 4. Click "Sign Up" - should go to `/sign-up`
 5. After signing up - should redirect to `/dashboard`
+
