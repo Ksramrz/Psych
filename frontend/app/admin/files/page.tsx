@@ -170,6 +170,7 @@ export default function FileManagerPage() {
                   className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
                 >
                   <div className="mb-3">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={file.url}
                       alt={file.name}

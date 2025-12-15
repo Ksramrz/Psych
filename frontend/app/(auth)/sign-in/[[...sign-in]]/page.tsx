@@ -10,8 +10,8 @@ export default function SignInPage() {
           routing="path"
           path="/sign-in"
           signUpUrl="/sign-up"
-          signInForceRedirectUrl="/dashboard"
-          signInFallbackRedirectUrl="/dashboard"
+          forceRedirectUrl="/dashboard"
+          fallbackRedirectUrl="/dashboard"
           appearance={{
             elements: {
               rootBox: 'mx-auto w-full',
