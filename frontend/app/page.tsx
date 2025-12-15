@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { useEffect, useState } from 'react';
@@ -122,10 +123,19 @@ const testimonials = [
 
 export default function Home() {
   const [isVisible, setIsVisible] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     setIsVisible(true);
   }, []);
+
+  const handleSignUp = () => {
+    router.push('/sign-up');
+  };
+
+  const handleSignIn = () => {
+    router.push('/sign-in');
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-white via-blue-50/30 to-cyan-50/50 overflow-hidden">
@@ -146,11 +156,14 @@ export default function Home() {
             <Link href="/sign-in" className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors">
               Sign In
             </Link>
-            <Link href="/sign-up">
-              <Button size="sm" variant="primary" className="shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-                Get Started Free
-              </Button>
-            </Link>
+            <Button 
+              size="sm" 
+              variant="primary" 
+              className="shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+              onClick={handleSignUp}
+            >
+              Get Started Free
+            </Button>
           </div>
         </div>
       </nav>
@@ -175,16 +188,22 @@ export default function Home() {
           </p>
           
           <div className="flex flex-wrap justify-center gap-4 animate-slide-up" style={{ animationDelay: '0.4s' }}>
-            <Link href="/sign-up">
-              <Button size="lg" variant="primary" className="text-lg px-8 py-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 card-3d">
-                Try it Free Now
-              </Button>
-            </Link>
-            <Link href="/sign-in">
-              <Button size="lg" variant="outline" className="text-lg px-8 py-6 border-2 border-gray-300 text-gray-700 hover:border-blue-600 hover:text-blue-600 glass transition-all duration-300">
-                Sign In
-              </Button>
-            </Link>
+            <Button 
+              size="lg" 
+              variant="primary" 
+              className="text-lg px-8 py-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 card-3d"
+              onClick={handleSignUp}
+            >
+              Try it Free Now
+            </Button>
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="text-lg px-8 py-6 border-2 border-gray-300 text-gray-700 hover:border-blue-600 hover:text-blue-600 glass transition-all duration-300"
+              onClick={handleSignIn}
+            >
+              Sign In
+            </Button>
           </div>
 
           {/* Hero Image Placeholder */}
@@ -354,11 +373,14 @@ export default function Home() {
             <p className="mb-8 text-xl text-blue-50">
               ClinicSense helps psychologists finish documentation faster, feel less drained, and finally get their evenings back.
             </p>
-            <Link href="/sign-up">
-              <Button size="lg" variant="primary" className="text-lg px-8 py-6 bg-white text-blue-600 hover:bg-gray-100 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 card-3d">
-                Try it Free Now
-              </Button>
-            </Link>
+            <Button 
+              size="lg" 
+              variant="primary" 
+              className="text-lg px-8 py-6 bg-white text-blue-600 hover:bg-gray-100 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 card-3d"
+              onClick={handleSignUp}
+            >
+              Try it Free Now
+            </Button>
           </div>
         </div>
       </section>
