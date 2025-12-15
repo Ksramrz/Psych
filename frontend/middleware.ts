@@ -9,7 +9,8 @@ const isProtectedRoute = createRouteMatcher([
   '/ethics(.*)',
   '/supervisor(.*)',
   '/settings(.*)',
-  '/api(.*)',
+  '/admin(.*)',
+  '/api/files(.*)', // Protect file management API
 ]);
 
 export default clerkMiddleware(async (auth, req) => {

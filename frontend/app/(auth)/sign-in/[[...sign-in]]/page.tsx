@@ -10,6 +10,7 @@ export default function SignInPage() {
           routing="path"
           path="/sign-in"
           signUpUrl="/sign-up"
+          afterSignInUrl="/dashboard"
           appearance={{
             elements: {
               rootBox: 'mx-auto w-full',
