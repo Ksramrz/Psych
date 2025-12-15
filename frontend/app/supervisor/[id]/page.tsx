@@ -1,6 +1,6 @@
 'use client';
 
-import { use, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { AppLayout } from '@/components/layout/AppLayout';
 import { useApiRequest } from '@/hooks/useApiRequest';
@@ -21,8 +21,8 @@ interface ReflectionData {
   created_at: string;
 }
 
-export default function ReflectionDetailPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = use(params);
+export default function ReflectionDetailPage({ params }: { params: { id: string } }) {
+  const { id } = params;
   const router = useRouter();
   const { request } = useApiRequest();
   const [reflectionData, setReflectionData] = useState<ReflectionData | null>(null);

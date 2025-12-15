@@ -1,6 +1,6 @@
 'use client';
 
-import { use, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { AppLayout } from '@/components/layout/AppLayout';
 import { useApiRequest } from '@/hooks/useApiRequest';
@@ -23,8 +23,8 @@ interface NotesData {
   created_at: string;
 }
 
-export default function NotesDetailPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = use(params);
+export default function NotesDetailPage({ params }: { params: { id: string } }) {
+  const { id } = params;
   const router = useRouter();
   const { request } = useApiRequest();
   const [notesData, setNotesData] = useState<NotesData | null>(null);
