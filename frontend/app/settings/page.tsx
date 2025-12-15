@@ -59,7 +59,7 @@ export default function SettingsPage() {
   return (
     <AppLayout>
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold text-foreground mb-6">Settings</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-6">Settings</h1>
 
         {message && (
           <div
@@ -73,12 +73,12 @@ export default function SettingsPage() {
           </div>
         )}
 
-        <div className="bg-white dark:bg-slate-900 border border-border shadow-sm rounded-lg p-6 space-y-6">
+        <div className="bg-white bg-white border border-gray-200 shadow-sm rounded-lg p-6 space-y-6">
           <div>
-            <h2 className="text-lg font-medium text-foreground mb-4">Privacy & Data</h2>
+            <h2 className="text-lg font-medium text-gray-900 mb-4">Privacy & Data</h2>
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-foreground">Data Storage</p>
+                <p className="text-sm font-medium text-gray-900">Data Storage</p>
                 <p className="text-sm text-slate-500">
                   {dataStorage
                     ? 'Your data is stored securely and can be exported.'
@@ -99,7 +99,7 @@ export default function SettingsPage() {
           </div>
 
           <div>
-            <h2 className="text-lg font-medium text-foreground mb-4">Export Data</h2>
+            <h2 className="text-lg font-medium text-gray-900 mb-4">Export Data</h2>
             <p className="text-sm text-slate-500 mb-4">
               Download all your stored data in JSON format.
             </p>
@@ -109,7 +109,7 @@ export default function SettingsPage() {
           </div>
 
           <div>
-            <h2 className="text-lg font-medium text-foreground mb-4">Subscription</h2>
+            <h2 className="text-lg font-medium text-gray-900 mb-4">Subscription</h2>
             <p className="text-sm text-slate-500 mb-4">Current plan: Free</p>
             <div className="space-y-3">
               <Button

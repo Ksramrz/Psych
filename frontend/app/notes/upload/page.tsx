@@ -50,9 +50,9 @@ export default function UploadNotesPage() {
   return (
     <AppLayout>
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold text-foreground mb-6">Upload Session Notes</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-6">Upload Session Notes</h1>
 
-        <form onSubmit={handleSubmit} className="bg-white dark:bg-slate-900 border border-border shadow-sm rounded-lg p-6 space-y-6">
+        <form onSubmit={handleSubmit} className="bg-white bg-white border border-gray-200 shadow-sm rounded-lg p-6 space-y-6">
           {error && (
             <div className="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
               {error}
@@ -81,7 +81,7 @@ export default function UploadNotesPage() {
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               rows={15}
-              className="w-full px-3 py-2 border border-border rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
+              className="w-full px-3 py-2 border border-gray-200 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
               placeholder="Paste your session notes here..."
             />
           </div>

@@ -75,7 +75,7 @@ export default function ReflectionDetailPage({ params }: { params: { id: string 
           >
             ← Back
           </button>
-          <h1 className="text-3xl font-bold text-foreground">Supervisor Reflection</h1>
+          <h1 className="text-3xl font-bold text-gray-900">Supervisor Reflection</h1>
           <p className="text-sm text-slate-500 mt-1">
             Created {new Date(reflectionData.created_at).toLocaleDateString()}
           </p>
@@ -88,7 +88,7 @@ export default function ReflectionDetailPage({ params }: { params: { id: string 
         <Card title="Reflective Questions">
           <ul className="list-disc list-inside space-y-2">
             {reflection_result.reflectiveQuestions.map((question, i) => (
-              <li key={i} className="text-foreground">{question}</li>
+              <li key={i} className="text-gray-900">{question}</li>
             ))}
           </ul>
         </Card>
@@ -96,7 +96,7 @@ export default function ReflectionDetailPage({ params }: { params: { id: string 
         <Card title="Alternative Perspectives">
           <ul className="list-disc list-inside space-y-2">
             {reflection_result.alternativePerspectives.map((perspective, i) => (
-              <li key={i} className="text-foreground">{perspective}</li>
+              <li key={i} className="text-gray-900">{perspective}</li>
             ))}
           </ul>
         </Card>
@@ -104,7 +104,7 @@ export default function ReflectionDetailPage({ params }: { params: { id: string 
         <Card title="Assessment Suggestions">
           <ul className="list-disc list-inside space-y-2">
             {reflection_result.assessmentSuggestions.map((suggestion, i) => (
-              <li key={i} className="text-foreground">{suggestion}</li>
+              <li key={i} className="text-gray-900">{suggestion}</li>
             ))}
           </ul>
         </Card>
@@ -112,7 +112,7 @@ export default function ReflectionDetailPage({ params }: { params: { id: string 
         <Card title="Intervention Ideas">
           <ul className="list-disc list-inside space-y-2">
             {reflection_result.interventionIdeas.map((idea, i) => (
-              <li key={i} className="text-foreground">{idea}</li>
+              <li key={i} className="text-gray-900">{idea}</li>
             ))}
           </ul>
         </Card>
@@ -120,7 +120,7 @@ export default function ReflectionDetailPage({ params }: { params: { id: string 
         <Card title="Important Considerations">
           <ul className="list-disc list-inside space-y-2">
             {reflection_result.considerations.map((consideration, i) => (
-              <li key={i} className="text-foreground">{consideration}</li>
+              <li key={i} className="text-gray-900">{consideration}</li>
             ))}
           </ul>
         </Card>

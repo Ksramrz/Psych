@@ -78,7 +78,7 @@ export default function EthicsCheckDetailPage({ params }: { params: { id: string
           >
             ← Back
           </button>
-          <h1 className="text-3xl font-bold text-foreground">Ethics Check Result</h1>
+          <h1 className="text-3xl font-bold text-gray-900">Ethics Check Result</h1>
           <p className="text-sm text-slate-500 mt-1">
             Created {new Date(checkData.created_at).toLocaleDateString()}
           </p>
@@ -108,7 +108,7 @@ export default function EthicsCheckDetailPage({ params }: { params: { id: string
           <Card title="Concerns">
             <ul className="list-disc list-inside space-y-2">
               {response.concerns.map((concern, i) => (
-                <li key={i} className="text-foreground">{concern}</li>
+                <li key={i} className="text-gray-900">{concern}</li>
               ))}
             </ul>
           </Card>
@@ -118,7 +118,7 @@ export default function EthicsCheckDetailPage({ params }: { params: { id: string
           <Card title="Recommendations">
             <ul className="list-disc list-inside space-y-2">
               {response.recommendations.map((recommendation, i) => (
-                <li key={i} className="text-foreground">{recommendation}</li>
+                <li key={i} className="text-gray-900">{recommendation}</li>
               ))}
             </ul>
           </Card>

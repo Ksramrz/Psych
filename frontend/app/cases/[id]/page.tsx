@@ -62,7 +62,7 @@ export default function CaseDetailPage({ params }: { params: { id: string } }) {
             >
               ← Back
             </button>
-            <h1 className="text-3xl font-bold text-foreground">{caseData.title}</h1>
+            <h1 className="text-3xl font-bold text-gray-900">{caseData.title}</h1>
             <p className="text-sm text-slate-500 mt-2">
               Created {new Date(caseData.created_at).toLocaleDateString()}
             </p>
@@ -74,7 +74,7 @@ export default function CaseDetailPage({ params }: { params: { id: string } }) {
             <Card title="Key Insights">
               <ul className="list-disc list-inside space-y-2">
                 {analysis.insights.map((insight, i) => (
-                  <li key={i} className="text-foreground">{insight}</li>
+                  <li key={i} className="text-gray-900">{insight}</li>
                 ))}
               </ul>
             </Card>
@@ -82,7 +82,7 @@ export default function CaseDetailPage({ params }: { params: { id: string } }) {
             <Card title="Patterns Identified">
               <ul className="list-disc list-inside space-y-2">
                 {analysis.patterns.map((pattern, i) => (
-                  <li key={i} className="text-foreground">{pattern}</li>
+                  <li key={i} className="text-gray-900">{pattern}</li>
                 ))}
               </ul>
             </Card>
@@ -90,7 +90,7 @@ export default function CaseDetailPage({ params }: { params: { id: string } }) {
             <Card title="Possible Frameworks">
               <ul className="list-disc list-inside space-y-2">
                 {analysis.possibleFrameworks.map((framework, i) => (
-                  <li key={i} className="text-foreground">{framework}</li>
+                  <li key={i} className="text-gray-900">{framework}</li>
                 ))}
               </ul>
             </Card>
@@ -98,7 +98,7 @@ export default function CaseDetailPage({ params }: { params: { id: string } }) {
             <Card title="Differential Diagnoses">
               <ul className="list-disc list-inside space-y-2">
                 {analysis.differentialDiagnoses.map((diagnosis, i) => (
-                  <li key={i} className="text-foreground">{diagnosis}</li>
+                  <li key={i} className="text-gray-900">{diagnosis}</li>
                 ))}
               </ul>
             </Card>
@@ -106,7 +106,7 @@ export default function CaseDetailPage({ params }: { params: { id: string } }) {
             <Card title="Intervention Suggestions">
               <ul className="list-disc list-inside space-y-2">
                 {analysis.interventionSuggestions.map((intervention, i) => (
-                  <li key={i} className="text-foreground">{intervention}</li>
+                  <li key={i} className="text-gray-900">{intervention}</li>
                 ))}
               </ul>
             </Card>
@@ -114,7 +114,7 @@ export default function CaseDetailPage({ params }: { params: { id: string } }) {
             <Card title="Assessment Recommendations">
               <ul className="list-disc list-inside space-y-2">
                 {analysis.assessmentRecommendations.map((assessment, i) => (
-                  <li key={i} className="text-foreground">{assessment}</li>
+                  <li key={i} className="text-gray-900">{assessment}</li>
                 ))}
               </ul>
             </Card>

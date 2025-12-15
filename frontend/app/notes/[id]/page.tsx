@@ -77,7 +77,7 @@ export default function NotesDetailPage({ params }: { params: { id: string } }) 
           >
             ← Back
           </button>
-          <h1 className="text-3xl font-bold text-foreground">Session Notes Summary</h1>
+          <h1 className="text-3xl font-bold text-gray-900">Session Notes Summary</h1>
           <p className="text-sm text-slate-500 mt-1">
             Created {new Date(notesData.created_at).toLocaleDateString()}
           </p>
@@ -92,7 +92,7 @@ export default function NotesDetailPage({ params }: { params: { id: string } }) 
             <Card title="Key Topics Discussed">
               <ul className="list-disc list-inside space-y-2">
                 {summary.keyTopics.map((topic, i) => (
-                  <li key={i} className="text-foreground">{topic}</li>
+                  <li key={i} className="text-gray-900">{topic}</li>
                 ))}
               </ul>
             </Card>
@@ -100,7 +100,7 @@ export default function NotesDetailPage({ params }: { params: { id: string } }) 
             <Card title="Interventions Used">
               <ul className="list-disc list-inside space-y-2">
                 {summary.interventionsUsed.map((intervention, i) => (
-                  <li key={i} className="text-foreground">{intervention}</li>
+                  <li key={i} className="text-gray-900">{intervention}</li>
                 ))}
               </ul>
             </Card>
@@ -117,7 +117,7 @@ export default function NotesDetailPage({ params }: { params: { id: string } }) 
               <Card title="Follow-up Items">
                 <ul className="list-disc list-inside space-y-2">
                   {summary.followUpItems.map((item, i) => (
-                    <li key={i} className="text-foreground">{item}</li>
+                    <li key={i} className="text-gray-900">{item}</li>
                   ))}
                 </ul>
               </Card>
@@ -127,7 +127,7 @@ export default function NotesDetailPage({ params }: { params: { id: string } }) 
               <Card title="Concerns">
                 <ul className="list-disc list-inside space-y-2">
                   {summary.concerns.map((concern, i) => (
-                    <li key={i} className="text-foreground">{concern}</li>
+                    <li key={i} className="text-gray-900">{concern}</li>
                   ))}
                 </ul>
               </Card>
