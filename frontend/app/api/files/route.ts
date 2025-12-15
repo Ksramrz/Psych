@@ -3,16 +3,19 @@ import { auth } from '@clerk/nextjs/server';
 import { promises as fs } from 'fs';
 import path from 'path';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 export async function GET() {
   try {
     const { userId } = await auth();
-    
+
     if (!userId) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     const imagesDir = path.join(process.cwd(), 'public', 'images');
-    
+
     // Check if directory exists, create if not
     try {
       await fs.access(imagesDir);

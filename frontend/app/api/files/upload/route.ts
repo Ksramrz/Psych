@@ -3,10 +3,13 @@ import { auth } from '@clerk/nextjs/server';
 import { writeFile, mkdir } from 'fs/promises';
 import path from 'path';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 export async function POST(request: NextRequest) {
   try {
     const { userId } = await auth();
-    
+
     if (!userId) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
@@ -23,24 +26,36 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'File must be an image' }, { status: 400 });
     }
 
-    // Validate file size (5MB max)
-    if (file.size > 5 * 1024 * 1024) {
+    // Validate file size (5MB max). Some deployments may have lower limits; we'll catch and report.
+    const maxSize = 5 * 1024 * 1024;
+    if (file.size > maxSize) {
       return NextResponse.json({ error: 'File size must be less than 5MB' }, { status: 400 });
     }
 
     const imagesDir = path.join(process.cwd(), 'public', 'images');
-    
+
     // Ensure directory exists
     await mkdir(imagesDir, { recursive: true });
 
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
+    let buffer: Buffer;
+    try {
+      const bytes = await file.arrayBuffer();
+      buffer = Buffer.from(bytes);
+    } catch (err: any) {
+      console.error('Error reading file buffer:', err);
+      return NextResponse.json({ error: 'Failed to read file buffer (possible size limit or encoding issue)' }, { status: 500 });
+    }
 
     // Sanitize filename
     const sanitizedFileName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
     const filePath = path.join(imagesDir, sanitizedFileName);
 
-    await writeFile(filePath, buffer);
+    try {
+      await writeFile(filePath, buffer);
+    } catch (err: any) {
+      console.error('Error writing file:', err);
+      return NextResponse.json({ error: 'Failed to save file on server' }, { status: 500 });
+    }
 
     return NextResponse.json({
       success: true,
