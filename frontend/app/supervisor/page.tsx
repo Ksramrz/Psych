@@ -60,7 +60,7 @@ export default function SupervisorPage() {
               value={caseContext}
               onChange={(e) => setCaseContext(e.target.value)}
               rows={15}
-              className="w-full px-3 py-2 border border-border rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-white text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               placeholder="Describe the case you'd like to reflect on. Include key details, challenges, and areas where you'd like guidance..."
             />
           </div>
