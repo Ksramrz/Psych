@@ -8,20 +8,11 @@ export async function apiRequest<T>(
 ): Promise<T> {
   try {
     // Get token if not provided (for client components)
-    let authToken = token;
-    if (!authToken && typeof window !== 'undefined') {
-      try {
-        // Use server-safe Clerk import to grab token on the client when available
-        const { getToken } = await import('@clerk/nextjs/server');
-        authToken = await getToken();
-      } catch (err) {
-        console.warn('Could not get Clerk token:', err);
-      }
-    }
+    const authToken = token;
 
-    const headers: HeadersInit = {
+    const headers: Record<string, string> = {
       'Content-Type': 'application/json',
-      ...options.headers,
+      ...(options.headers as Record<string, string>),
     };
 
     if (authToken) {
