@@ -149,7 +149,7 @@ export default function Home() {
       {/* Navigation */}
       <nav className="sticky top-0 z-50 border-b border-white/20 glass backdrop-blur-md shadow-sm">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-          <Link href="/" className="text-2xl font-bold bg-gradient-to-r from-blue-600 via-cyan-600 to-blue-600 bg-clip-text text-transparent animate-gradient">
+          <Link href="/" className="text-2xl font-bold bg-gradient-to-r from-blue-600 via-cyan-600 to-blue-600 bg-clip-text text-transparent animate-gradient font-logo">
             ClinicSense
           </Link>
           <div className="flex items-center gap-6">
@@ -186,7 +186,7 @@ export default function Home() {
             </span>
           </h1>
           
-          <p className="mb-8 text-xl text-gray-600 md:text-2xl max-w-3xl mx-auto animate-slide-up" style={{ animationDelay: '0.2s' }}>
+          <p className="mb-8 text-xl text-gray-700 md:text-2xl max-w-3xl mx-auto animate-slide-up" style={{ animationDelay: '0.2s' }}>
             ClinicSense turns your case notes into structured, compliant documentation with AI-powered analysis, ethics checks, and supervisor support—all in one platform.
           </p>
           
@@ -229,7 +229,7 @@ export default function Home() {
       <section className="relative mx-auto max-w-7xl px-6 py-16">
         <div className="mb-12 text-center">
           <h2 className="mb-4 text-3xl font-bold text-gray-900">What Psychologists Are Saying</h2>
-          <p className="text-gray-600">Join clinicians who are saving time and improving outcomes</p>
+          <p className="text-gray-700">Join clinicians who are saving time and improving outcomes</p>
         </div>
         <div className="grid gap-6 md:grid-cols-3">
           {testimonials.map((testimonial, idx) => (
@@ -261,7 +261,7 @@ export default function Home() {
       <section className="relative mx-auto max-w-7xl px-6 py-16">
         <div className="mb-12 text-center">
           <h2 className="mb-4 text-3xl font-bold text-gray-900">Everything You Need in One Platform</h2>
-          <p className="text-gray-600">Built specifically for psychologists and mental health professionals</p>
+          <p className="text-gray-700">Built specifically for psychologists and mental health professionals</p>
         </div>
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {features.map((feature, idx) => (
@@ -315,7 +315,7 @@ export default function Home() {
                   <span className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 text-sm font-semibold text-white shadow-sm">
                     ✓
                   </span>
-                  <span className="text-lg text-gray-700">{benefit}</span>
+                  <span className="text-lg text-gray-800">{benefit}</span>
                 </li>
               ))}
             </ul>
@@ -339,7 +339,7 @@ export default function Home() {
       <section className="relative mx-auto max-w-7xl px-6 py-16">
         <div className="mb-12 text-center">
           <h2 className="mb-4 text-3xl font-bold text-gray-900">How It Works</h2>
-          <p className="text-gray-600">Get started in minutes</p>
+          <p className="text-gray-700">Get started in minutes</p>
         </div>
         <div className="grid gap-8 md:grid-cols-3">
           {[

@@ -66,6 +66,12 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
+  .font-logo {
+    font-family: var(--font-poppins), 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
   h1, h2, h3, h4, h5, h6 {
     @apply text-foreground font-semibold tracking-tight;
   }
