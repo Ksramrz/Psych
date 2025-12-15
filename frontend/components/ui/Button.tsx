@@ -7,6 +7,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
   size?: ButtonSize;
   isLoading?: boolean;
+  as?: 'button' | 'span';
 }
 
 const baseClasses =
@@ -31,11 +32,22 @@ export function Button({
   variant = 'primary',
   size = 'md',
   isLoading = false,
+  as = 'button',
   ...props
 }: ButtonProps) {
+  const classes = `${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${className}`;
+  
+  if (as === 'span') {
+    return (
+      <span className={classes}>
+        {isLoading ? 'Loading...' : children}
+      </span>
+    );
+  }
+  
   return (
     <button
-      className={`${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${className}`}
+      className={classes}
       {...props}
     >
       {isLoading ? 'Loading...' : children}
