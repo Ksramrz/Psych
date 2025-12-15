@@ -32,7 +32,12 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'File size must be less than 5MB' }, { status: 400 });
     }
 
+    // Use absolute path to ensure we're in the right directory
+    // In production, process.cwd() should be /var/www/clinicsense/frontend
     const imagesDir = path.join(process.cwd(), 'public', 'images');
+    
+    console.log('Uploading to:', imagesDir);
+    console.log('Current working directory:', process.cwd());
 
     // Ensure directory exists
     await mkdir(imagesDir, { recursive: true });
