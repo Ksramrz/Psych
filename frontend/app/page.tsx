@@ -138,12 +138,12 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white via-blue-50/30 to-cyan-50/50 overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-white via-gray-50/20 to-blue-50/30 overflow-hidden">
       {/* Animated Background Elements */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-blue-400/20 rounded-full blur-3xl animate-float" />
-        <div className="absolute top-40 right-20 w-96 h-96 bg-cyan-400/20 rounded-full blur-3xl animate-float-reverse" style={{ animationDelay: '1s' }} />
-        <div className="absolute bottom-20 left-1/3 w-80 h-80 bg-purple-400/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }} />
+        <div className="absolute top-20 left-10 w-72 h-72 bg-blue-200/10 rounded-full blur-3xl animate-float" />
+        <div className="absolute top-40 right-20 w-96 h-96 bg-cyan-200/10 rounded-full blur-3xl animate-float-reverse" style={{ animationDelay: '1s' }} />
+        <div className="absolute bottom-20 left-1/3 w-80 h-80 bg-purple-200/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }} />
       </div>
 
       {/* Navigation */}
@@ -153,7 +153,7 @@ export default function Home() {
             ClinicSense
           </Link>
           <div className="flex items-center gap-6">
-            <Link href="/sign-in" className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors">
+            <Link href="/sign-in" className="text-sm font-medium text-gray-800 hover:text-blue-600 transition-colors">
               Sign In
             </Link>
             <Button 
@@ -171,7 +171,7 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative mx-auto max-w-7xl px-6 py-20 text-center">
         <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full glass px-4 py-2 text-sm font-medium text-blue-700 ring-1 ring-blue-200/50 animate-fade-in">
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-white/90 backdrop-blur-sm px-4 py-2 text-sm font-medium text-blue-600 ring-1 ring-blue-100 shadow-sm animate-fade-in">
             <span className="text-lg">✨</span>
             <span>Trusted by psychologists nationwide</span>
           </div>
@@ -199,7 +199,7 @@ export default function Home() {
             <Button 
               size="lg" 
               variant="outline" 
-              className="text-lg px-8 py-6 border-2 border-gray-300 text-gray-700 hover:border-blue-600 hover:text-blue-600 glass transition-all duration-300"
+              className="text-lg px-8 py-6 border-2 border-gray-300 text-gray-800 hover:border-blue-600 hover:text-blue-600 bg-white hover:bg-gray-50 transition-all duration-300"
               onClick={handleSignIn}
             >
               Sign In
@@ -232,22 +232,22 @@ export default function Home() {
           {testimonials.map((testimonial, idx) => (
             <Card
               key={idx}
-              className="glass bg-white/80 text-gray-900 shadow-xl ring-1 ring-white/50 hover:shadow-2xl hover:scale-105 transition-all duration-300 card-3d animate-scale-in"
+              className="bg-white text-gray-900 shadow-lg ring-1 ring-gray-200 hover:shadow-xl hover:scale-105 transition-all duration-300 card-3d animate-scale-in"
               style={{ animationDelay: `${idx * 0.1}s` }}
             >
               <div className="flex flex-col gap-4">
                 <div className="flex items-center gap-4">
-                  <div className="relative w-16 h-16 rounded-full overflow-hidden ring-2 ring-blue-200">
-                    <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-cyan-400 flex items-center justify-center text-2xl">
+                  <div className="relative w-16 h-16 rounded-full overflow-hidden ring-2 ring-gray-200 bg-gradient-to-br from-blue-100 to-cyan-100">
+                    <div className="absolute inset-0 flex items-center justify-center text-2xl">
                       👤
                     </div>
                   </div>
                   <div>
                     <p className="font-semibold text-gray-900">{testimonial.author}</p>
-                    <p className="text-sm text-gray-500">{testimonial.role}</p>
+                    <p className="text-sm text-gray-600">{testimonial.role}</p>
                   </div>
                 </div>
-                <p className="text-gray-700 italic">&quot;{testimonial.quote}&quot;</p>
+                <p className="text-gray-800 italic">&quot;{testimonial.quote}&quot;</p>
               </div>
             </Card>
           ))}
@@ -264,26 +264,26 @@ export default function Home() {
           {features.map((feature, idx) => (
             <Card
               key={idx}
-              className="glass bg-white/80 text-gray-900 shadow-xl ring-1 ring-white/50 hover:shadow-2xl transition-all duration-300 card-3d group overflow-hidden animate-scale-in"
+              className="bg-white text-gray-900 shadow-lg ring-1 ring-gray-200 hover:shadow-xl transition-all duration-300 card-3d group overflow-hidden animate-scale-in"
               style={{ animationDelay: `${idx * 0.05}s` }}
             >
               <div className="flex flex-col gap-4">
                 {/* Feature Image Placeholder */}
-                <div className="relative h-48 rounded-xl overflow-hidden mb-2">
-                  <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-20 group-hover:opacity-30 transition-opacity duration-300`} />
+                <div className="relative h-48 rounded-xl overflow-hidden mb-2 bg-gradient-to-br from-gray-50 to-gray-100">
+                  <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-10 group-hover:opacity-15 transition-opacity duration-300`} />
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="text-center">
                       <div className="text-5xl mb-2">{feature.icon}</div>
-                      <p className="text-xs text-gray-500">Feature Image</p>
+                      <p className="text-xs text-gray-400">Feature Image</p>
                     </div>
                   </div>
                 </div>
                 
-                <div className={`inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-r ${feature.gradient} text-white shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                <div className={`inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-r ${feature.gradient} text-white shadow-md group-hover:scale-110 transition-transform duration-300`}>
                   <span className="text-2xl">{feature.icon}</span>
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900">{feature.title}</h3>
-                <p className="text-sm text-gray-600">{feature.description}</p>
+                <p className="text-sm text-gray-700">{feature.description}</p>
               </div>
             </Card>
           ))}
@@ -319,13 +319,13 @@ export default function Home() {
           </div>
           
           {/* Benefits Image Placeholder */}
-          <div className="relative h-[500px] rounded-2xl overflow-hidden shadow-2xl card-3d animate-float">
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 via-cyan-500/20 to-purple-500/20 animate-shimmer" />
+          <div className="relative h-[500px] rounded-2xl overflow-hidden shadow-xl bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200 card-3d animate-float">
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-100/30 via-cyan-100/30 to-purple-100/30 animate-shimmer" />
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="text-center">
                 <div className="text-6xl mb-4">📊</div>
-                <p className="text-gray-600 font-medium">Benefits Visualization</p>
-                <p className="text-sm text-gray-400 mt-2">Add dashboard or analytics image</p>
+                <p className="text-gray-700 font-medium">Benefits Visualization</p>
+                <p className="text-sm text-gray-500 mt-2">Add dashboard or analytics image</p>
               </div>
             </div>
           </div>
@@ -345,8 +345,8 @@ export default function Home() {
             { step: '3', title: 'Review & Export', desc: 'Review, refine, and export to your EHR system', image: '/images/step-3.jpg' },
           ].map((item, idx) => (
             <div key={idx} className="text-center animate-scale-in" style={{ animationDelay: `${idx * 0.1}s` }}>
-              <div className="relative mx-auto mb-6 h-64 w-full rounded-xl overflow-hidden shadow-xl card-3d">
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-400/30 via-cyan-400/30 to-purple-400/30 animate-shimmer" />
+              <div className="relative mx-auto mb-6 h-64 w-full rounded-xl overflow-hidden shadow-lg bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200 card-3d">
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-100/30 via-cyan-100/30 to-purple-100/30 animate-shimmer" />
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-center">
                     <div className="text-5xl mb-2">Step {item.step}</div>
@@ -358,7 +358,7 @@ export default function Home() {
                 {item.step}
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">{item.title}</h3>
-              <p className="text-gray-600">{item.desc}</p>
+              <p className="text-gray-700">{item.desc}</p>
             </div>
           ))}
         </div>
@@ -386,7 +386,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="relative border-t border-gray-200 glass backdrop-blur-md">
+      <footer className="relative border-t border-gray-200 bg-white/80 backdrop-blur-md">
         <div className="mx-auto max-w-7xl px-6 py-12">
           <div className="grid gap-8 md:grid-cols-4">
             <div>
