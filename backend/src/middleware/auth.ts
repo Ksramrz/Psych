@@ -1,6 +1,6 @@
 import { clerkMiddleware, getAuth } from '@clerk/express';
 import { Request, Response, NextFunction } from 'express';
-import { getUserByClerkId } from '../services/supabase.js';
+import { getUserByClerkId, ensureUser } from '../services/supabase.js';
 
 export const clerkAuth = clerkMiddleware();
 
@@ -22,11 +22,10 @@ export async function requireAuth(
       return;
     }
 
-    // Get user from database
-    const user = await getUserByClerkId(userId);
+    // Get user from database; create if missing
+    let user = await getUserByClerkId(userId);
     if (!user) {
-      res.status(404).json({ error: 'User not found' });
-      return;
+      user = await ensureUser(userId, null);
     }
 
     req.userId = userId;

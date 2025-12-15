@@ -92,3 +92,25 @@ export async function syncUserFromClerk(clerkId: string, email: string) {
   return data;
 }
 
+// Create a minimal user record if none exists (fallback to avoid 404s)
+export async function ensureUser(clerkId: string, email?: string | null) {
+  const { data, error } = await supabase
+    .from('users')
+    .upsert(
+      {
+        clerk_user_id: clerkId,
+        email: email ?? null,
+        updated_at: new Date().toISOString(),
+      },
+      { onConflict: 'clerk_user_id' }
+    )
+    .select()
+    .single();
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+}
+
