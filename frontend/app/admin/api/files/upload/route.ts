@@ -34,10 +34,12 @@ export async function POST(request: NextRequest) {
 
     // Use absolute path to ensure we're in the right directory
     // In production, process.cwd() should be /var/www/clinicsense/frontend
-    const imagesDir = path.join(process.cwd(), 'public', 'images');
+    // But we need to ensure we're using the correct path
+    const cwd = process.cwd();
+    const imagesDir = path.resolve(cwd, 'public', 'images');
     
     console.log('Uploading to:', imagesDir);
-    console.log('Current working directory:', process.cwd());
+    console.log('Current working directory:', cwd);
 
     // Ensure directory exists
     await mkdir(imagesDir, { recursive: true });
@@ -51,8 +53,24 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Failed to read file buffer (possible size limit or encoding issue)' }, { status: 500 });
     }
 
-    // Sanitize filename
-    const sanitizedFileName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
+    // Sanitize filename - preserve hyphens and dots, only replace truly problematic characters
+    // Allow: letters, numbers, dots, hyphens, underscores
+    let sanitizedFileName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+    
+    // Remove any leading/trailing dots or spaces
+    sanitizedFileName = sanitizedFileName.trim().replace(/^\.+|\.+$/g, '');
+    
+    // Ensure it has a valid extension
+    if (!sanitizedFileName.match(/\.(jpg|jpeg|png|gif|webp)$/i)) {
+      // If no extension, try to preserve original extension
+      const originalExt = file.name.match(/\.(jpg|jpeg|png|gif|webp)$/i);
+      if (originalExt) {
+        sanitizedFileName = sanitizedFileName + originalExt[0];
+      } else {
+        sanitizedFileName = sanitizedFileName + '.jpg'; // default
+      }
+    }
+    
     const filePath = path.join(imagesDir, sanitizedFileName);
 
     try {
