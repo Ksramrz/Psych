@@ -30,7 +30,7 @@ Place your images here. The paths in the code reference images from this directo
 - `/images/step-3.jpg`
 
 ### Hero Image
-- Hero dashboard screenshot (inline placeholder in code)
+- `/images/hero-dashboard.jpg` - Main hero image (1200x800px recommended)
 
 ### Benefits Image
 - Benefits visualization (inline placeholder in code)

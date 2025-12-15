@@ -209,15 +209,27 @@ export default function Home() {
             </Button>
           </div>
 
-          {/* Hero Image Placeholder */}
+          {/* Hero Image */}
           <div className="mt-16 relative animate-float">
             <div className="relative mx-auto max-w-5xl h-[400px] md:h-[500px] rounded-2xl overflow-hidden shadow-2xl card-3d">
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 via-cyan-500/20 to-purple-500/20 animate-shimmer" />
-              <div className="absolute inset-0 flex items-center justify-center">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/hero-dashboard.jpg"
+                alt="ClinicSense Dashboard"
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  // Fallback to gradient placeholder if image not found
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = 'none';
+                  const placeholder = target.nextElementSibling as HTMLElement;
+                  if (placeholder) placeholder.style.display = 'flex';
+                }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 via-cyan-500/20 to-purple-500/20 animate-shimmer hidden flex-col items-center justify-center">
                 <div className="text-center">
                   <div className="text-6xl mb-4">🖼️</div>
                   <p className="text-gray-500 font-medium">Hero Dashboard Image</p>
-                  <p className="text-sm text-gray-400 mt-2">Add your product screenshot here</p>
+                  <p className="text-sm text-gray-400 mt-2">Upload hero-dashboard.jpg to /images/</p>
                 </div>
               </div>
             </div>

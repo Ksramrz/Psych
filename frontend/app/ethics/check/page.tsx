@@ -57,7 +57,7 @@ export default function EthicsCheckPage() {
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
               rows={10}
-              className="w-full px-3 py-2 border border-border rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-white text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               placeholder="Describe the situation, action, or question you want to check against ethical guidelines..."
             />
           </div>
