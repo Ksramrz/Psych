@@ -18,7 +18,7 @@ export async function DELETE(
     }
 
     const fileName = decodeURIComponent(params.fileName);
-    
+
     // Security: prevent path traversal
     if (fileName.includes('..') || fileName.includes('/') || fileName.includes('\\')) {
       return NextResponse.json({ error: 'Invalid file name' }, { status: 400 });

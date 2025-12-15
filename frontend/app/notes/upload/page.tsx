@@ -52,7 +52,7 @@ export default function UploadNotesPage() {
       <div className="max-w-4xl mx-auto">
         <h1 className="text-3xl font-bold text-gray-900 mb-6">Upload Session Notes</h1>
 
-        <form onSubmit={handleSubmit} className="bg-white bg-white border border-gray-200 shadow-sm rounded-lg p-6 space-y-6">
+        <form onSubmit={handleSubmit} className="bg-white border border-gray-200 shadow-sm rounded-lg p-6 space-y-6">
           {error && (
             <div className="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
               {error}

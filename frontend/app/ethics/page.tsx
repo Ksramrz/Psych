@@ -14,7 +14,7 @@ export default function EthicsPage() {
             <Button>New Check</Button>
           </Link>
         </div>
-        <div className="bg-white bg-white border border-gray-200 shadow-sm rounded-lg p-6">
+        <div className="bg-white border border-gray-200 shadow-sm rounded-lg p-6">
           <p className="text-sm text-slate-500">No ethics checks yet. Start a new check.</p>
         </div>
       </div>
