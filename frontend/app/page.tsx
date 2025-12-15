@@ -123,10 +123,19 @@ const testimonials = [
 
 export default function Home() {
   const [isVisible, setIsVisible] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     setIsVisible(true);
   }, []);
+
+  const navigateToSignUp = () => {
+    router.push('/sign-up');
+  };
+
+  const navigateToSignIn = () => {
+    router.push('/sign-in');
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-white via-gray-50/20 to-blue-50/30 overflow-hidden">
@@ -144,19 +153,20 @@ export default function Home() {
             ClinicSense
           </Link>
           <div className="flex items-center gap-6">
-            <Link href="/sign-in" className="text-sm font-medium text-gray-800 hover:text-blue-600 transition-colors">
+            <button
+              onClick={navigateToSignIn}
+              className="text-sm font-medium text-gray-800 hover:text-blue-600 transition-colors bg-transparent border-none cursor-pointer"
+            >
               Sign In
-            </Link>
-            <Link href="/sign-up" className="inline-block">
-              <Button 
-                size="sm" 
-                variant="primary" 
-                className="shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-                as={'span' as const}
-              >
-                Get Started Free
-              </Button>
-            </Link>
+            </button>
+            <Button 
+              size="sm" 
+              variant="primary" 
+              className="shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+              onClick={navigateToSignUp}
+            >
+              Get Started Free
+            </Button>
           </div>
         </div>
       </nav>
@@ -181,26 +191,22 @@ export default function Home() {
           </p>
           
           <div className="flex flex-wrap justify-center gap-4 animate-slide-up" style={{ animationDelay: '0.4s' }}>
-            <Link href="/sign-up" className="inline-block">
-              <Button 
-                size="lg" 
-                variant="primary" 
-                className="text-lg px-8 py-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 card-3d"
-                as={'span' as const}
-              >
-                Try it Free Now
-              </Button>
-            </Link>
-            <Link href="/sign-in" className="inline-block">
-              <Button 
-                size="lg" 
-                variant="outline" 
-                className="text-lg px-8 py-6 border-2 border-gray-300 text-gray-800 hover:border-blue-600 hover:text-blue-600 bg-white hover:bg-gray-50 transition-all duration-300"
-                as={'span' as const}
-              >
-                Sign In
-              </Button>
-            </Link>
+            <Button 
+              size="lg" 
+              variant="primary" 
+              className="text-lg px-8 py-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 card-3d"
+              onClick={navigateToSignUp}
+            >
+              Try it Free Now
+            </Button>
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="text-lg px-8 py-6 border-2 border-gray-300 text-gray-800 hover:border-blue-600 hover:text-blue-600 bg-white hover:bg-gray-50 transition-all duration-300"
+              onClick={navigateToSignIn}
+            >
+              Sign In
+            </Button>
           </div>
 
           {/* Hero Image Placeholder */}
@@ -370,16 +376,14 @@ export default function Home() {
             <p className="mb-8 text-xl text-blue-50">
               ClinicSense helps psychologists finish documentation faster, feel less drained, and finally get their evenings back.
             </p>
-            <Link href="/sign-up" className="inline-block">
-              <Button 
-                size="lg" 
-                variant="primary" 
-                className="text-lg px-8 py-6 bg-white text-blue-600 hover:bg-gray-100 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 card-3d"
-                as={'span' as const}
-              >
-                Try it Free Now
-              </Button>
-            </Link>
+            <Button 
+              size="lg" 
+              variant="primary" 
+              className="text-lg px-8 py-6 bg-white text-blue-600 hover:bg-gray-100 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 card-3d"
+              onClick={navigateToSignUp}
+            >
+              Try it Free Now
+            </Button>
           </div>
         </div>
       </section>
