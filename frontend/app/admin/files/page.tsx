@@ -37,6 +37,8 @@ export default function FileManagerPage() {
       if (response.ok) {
         const data = await response.json();
         setFiles(data.files || []);
+      } else {
+        console.error('Failed to list files');
       }
     } catch (error) {
       console.error('Error fetching files:', error);
@@ -71,12 +73,18 @@ export default function FileManagerPage() {
         body: formData,
       });
 
+      const contentType = response.headers.get('content-type');
+      const isJson = contentType && contentType.includes('application/json');
+      const payload = isJson ? await response.json().catch(() => ({})) : await response.text();
+
       if (response.ok) {
         await fetchFiles();
         alert('File uploaded successfully!');
       } else {
-        const error = await response.json();
-        alert(`Upload failed: ${error.error || 'Unknown error'}`);
+        const errorMsg =
+          (isJson && (payload as any)?.error) ||
+          (typeof payload === 'string' ? payload : 'Unknown error');
+        alert(`Upload failed: ${errorMsg}`);
       }
     } catch (error) {
       console.error('Upload error:', error);
@@ -216,6 +224,7 @@ export default function FileManagerPage() {
         <div className="mt-8 p-4 bg-blue-50 rounded-lg">
           <h3 className="text-sm font-semibold text-gray-900 mb-2">Expected Image Names</h3>
           <ul className="text-sm text-gray-700 space-y-1">
+            <li className="font-semibold">• hero-dashboard.jpg (Main hero image - 1200x800px recommended)</li>
             <li>• feature-case-analysis.jpg</li>
             <li>• feature-notes.jpg</li>
             <li>• feature-ethics.jpg</li>
